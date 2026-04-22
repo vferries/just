@@ -414,7 +414,14 @@
       <span class="accent">votre projet.</span>
     </h2>
 
-    <form class="contact-form reveal" action="[[ ENDPOINT_FORMULAIRE ]]" method="POST" novalidate>
+    <form class="contact-form reveal" action="https://formsubmit.co/ajax/just.bordas@gmail.com" method="POST" novalidate>
+      <!-- FormSubmit — options contrôlées par des champs cachés _xxx -->
+      <input type="hidden" name="_subject" value="Nouveau message — site Just Bordas" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_captcha" value="false" />
+      <!-- Honeypot : champ caché en CSS ; les bots le remplissent, les humains non -->
+      <input type="text" name="_honey" class="honey-pot" tabindex="-1" autocomplete="off" />
+
       <div class="field">
         <label for="cf-name">Nom complet</label>
         <input type="text" id="cf-name" name="name" autocomplete="name" required />

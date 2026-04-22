@@ -1110,6 +1110,15 @@
     .contact-form .form-actions,
     .form-status { grid-column: span 1; }
   }
+  /* Honeypot FormSubmit — invisible pour les humains, rempli par les bots */
+  .honey-pot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
 
   /* ========== PAGE LÉGALE ========== */
   .legal {
