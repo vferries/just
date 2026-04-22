@@ -1,0 +1,20 @@
+# Claude Code — permissions locales
+.claude/
+
+# Sources photo non renommées (redondantes avec photos/source/)
+photos/IMG_*.HEIC
+photos/WhatsApp*.jpeg
+photos/WhatsApp*.jpg
+
+# Previews temporaires (générées lors d'analyses)
+/tmp/photo-previews/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+*~

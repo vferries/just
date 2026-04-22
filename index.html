@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Just Bordas — Ferronnerie d'art</title>
+<meta name="description" content="Atelier de ferronnerie d'art — escaliers, cheminées et mobilier sur mesure en acier, verre et bois. Forgé main, livré en France." />
+<meta name="author" content="Just Bordas" />
+<meta name="theme-color" content="#07070a" />
+
+<link rel="canonical" href="[[ https://votre-site.fr/ ]]" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:site_name" content="Just Bordas" />
+<meta property="og:title" content="Just Bordas — Ferronnerie d'art" />
+<meta property="og:description" content="Pièces uniques en acier, verre et bois — façonnées à la main pour des intérieurs qui ne ressemblent qu'à eux-mêmes." />
+<meta property="og:url" content="[[ https://votre-site.fr/ ]]" />
+<meta property="og:image" content="[[ https://votre-site.fr/og-image.jpg ]]" />
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Just Bordas — Ferronnerie d'art" />
+<meta name="twitter:description" content="Pièces uniques en acier, verre et bois — façonnées à la main." />
+<meta name="twitter:image" content="[[ https://votre-site.fr/og-image.jpg ]]" />
+
+<!-- Favicon (étincelle sur fond anthracite) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%2307070a'/><circle cx='32' cy='32' r='11' fill='%23ff7a2e'/><circle cx='32' cy='32' r='4' fill='%23fff4d6'/></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter+Tight:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="./styles.css" />
+<script src="./script.js" defer></script>
+</head>
+<body>
+
+<canvas id="sparks-canvas"></canvas>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<div class="loader" id="loader">
+  <div class="loader-mark"><span>Just Bordas</span></div>
+  <div class="loader-bar"></div>
+</div>
+
+<nav id="nav">
+  <a href="#" class="logo">Just Bordas</a>
+  <div class="nav-links">
+    <a href="#intro">Manifeste</a>
+    <a href="#escaliers">Escaliers</a>
+    <a href="#cheminees">Cheminées</a>
+    <a href="#mobilier">Mobilier</a>
+    <a href="#ferronnerie">Portes &amp; Verrières</a>
+    <a href="#atelier">Atelier</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="eyebrow">Ferronnerie d'art · Vitrerie · Mobilier sur mesure</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="word"><span style="--i:0">D</span></span><span class="word"><span style="--i:1">u</span></span>&nbsp;<span class="word"><span style="--i:2">f</span></span><span class="word"><span style="--i:3">e</span></span><span class="word"><span style="--i:4">r</span></span><br/>
+      <span class="word"><span style="--i:5">a</span></span><span class="word"><span style="--i:6">u</span></span>&nbsp;<span class="word"><span style="--i:7">f</span></span><span class="word"><span style="--i:8">e</span></span><span class="word"><span style="--i:9">u</span></span>.
+    </h1>
+
+    <p class="hero-subtitle">
+      Pièces uniques en acier, verre et bois — façonnées à la main pour des intérieurs qui ne ressemblent qu'à eux-mêmes.
+    </p>
+  </div>
+
+  <div class="hero-meta">
+    <div>Montjoire <span>●</span> Haute-Garonne</div>
+    <div>EST. 2015</div>
+    <div>Dossier <span>2026</span></div>
+  </div>
+</section>
+
+<!-- INTRO PHRASE -->
+<section class="intro" id="intro">
+  <p class="intro-text reveal-words">
+    <span class="word"><span>Chaque</span></span>
+    <span class="word"><span>pièce</span></span>
+    <span class="word"><span>est</span></span>
+    <span class="word"><span>une</span></span>
+    <span class="word"><span class="accent">conversation</span></span>
+    <span class="word"><span>entre</span></span>
+    <span class="word"><span>la</span></span>
+    <span class="word"><span>matière</span></span>
+    <span class="word"><span>brute</span></span>
+    <span class="word"><span>et</span></span>
+    <span class="word"><span>la</span></span>
+    <span class="word"><span class="muted">lumière qu'elle accueille.</span></span>
+  </p>
+</section>
+
+<!-- ESCALIERS — SCROLL HORIZONTAL -->
+<div class="horizontal-section" id="escaliers">
+  <div class="horizontal-sticky">
+    <div class="horizontal-header">
+      <div>
+        <span class="eyebrow" style="display:block; margin-bottom: 1rem;">— 01 / Escaliers</span>
+        <h2><span class="italic">Lignes</span> qui montent.</h2>
+      </div>
+      <div class="horizontal-counter">
+        <span class="current" id="hCurrent">01</span> / <span id="hTotal">04</span>
+      </div>
+    </div>
+
+    <div class="horizontal-track" id="horizontalTrack">
+      <div class="h-card">
+        <div class="h-card-image img-bg img-treat" data-src="./photos/escalier-01.jpg"></div>
+        <div class="h-card-info">
+          <span class="num">N° 01 — 2025</span>
+          <h3>Hélicoïdal «&nbsp;Aube&nbsp;»</h3>
+          <div class="specs">Acier noirci · Chêne · Laiton</div>
+        </div>
+      </div>
+      <div class="h-card">
+        <div class="h-card-image img-bg img-treat" data-src="./photos/escalier-02.jpg"></div>
+        <div class="h-card-info">
+          <span class="num">N° 02 — 2024</span>
+          <h3>Crémaillère droite</h3>
+          <div class="specs">Acier brut · Verre feuilleté</div>
+        </div>
+      </div>
+      <div class="h-card">
+        <div class="h-card-image img-bg img-treat" data-src="./photos/escalier-03.jpg"></div>
+        <div class="h-card-info">
+          <span class="num">N° 03 — 2024</span>
+          <h3>Suspendu en porte-à-faux</h3>
+          <div class="specs">Cantilever · Pierre sèche</div>
+        </div>
+      </div>
+      <div class="h-card">
+        <div class="h-card-image img-bg img-treat" data-src="./photos/escalier-04.jpg"></div>
+        <div class="h-card-info">
+          <span class="num">N° 04 — 2023</span>
+          <h3>Double quart-tournant</h3>
+          <div class="specs">Hôtel particulier · XVIIIᵉ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHEMINÉES -->
+<section class="chem-section" id="cheminees">
+  <div class="container">
+    <div class="section-eyebrow">
+      <span class="section-num">— 02 / Cheminées</span>
+    </div>
+
+    <div class="chem-layout">
+      <div class="chem-text reveal">
+        <h2>
+          Foyers <span class="italic">sculptés</span>,<br/>
+          hottes en acier patiné.
+        </h2>
+        <p>
+          La cheminée est le centre de gravité d'une pièce. Nous la dessinons comme une sculpture habitée par le feu — pas comme un simple foyer. Acier Corten, plaques pliées d'un seul tenant, patines au chalumeau.
+        </p>
+      </div>
+
+      <div class="chem-gallery">
+        <div class="chem-piece reveal-stagger">
+          <div class="chem-piece-img reveal-image">
+            <div class="inner img-bg img-treat" data-src="./photos/cheminee-01.jpg"></div>
+          </div>
+          <div class="chem-piece-meta">
+            <h3>«&nbsp;Goutte&nbsp;»</h3>
+            <div class="info">Suspendue<br/>Acier patiné</div>
+          </div>
+        </div>
+        <div class="chem-piece reveal-stagger">
+          <div class="chem-piece-img reveal-image">
+            <div class="inner img-bg img-treat" data-src="./photos/cheminee-02.jpg"></div>
+          </div>
+          <div class="chem-piece-meta">
+            <h3>Intégration salon</h3>
+            <div class="info">Mise en scène<br/>Chêne &amp; acier</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item">Acier</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item outline">Verre</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item">Chêne</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item outline">Laiton</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item">Forge</div>
+    <div class="marquee-dot"></div>
+    <div class="marquee-item outline">Patine</div>
+    <div class="marquee-dot"></div>
+  </div>
+</div>
+
+<!-- MOBILIER -->
+<section class="mobilier" id="mobilier">
+  <div class="container">
+    <div class="section-eyebrow">
+      <span class="section-num">— 03 / Mobilier</span>
+    </div>
+    <h2 class="section-title reveal">
+      Pièces <span class="italic">d'usage</span>,<br/>pensées pour durer.
+    </h2>
+
+    <div class="mobilier-trio">
+      <div class="trio-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/mobilier-01.jpg"></div>
+        <div class="trio-info">
+          <h4>Table «&nbsp;Occitane&nbsp;»</h4>
+          <span class="mat">Chêne / Acier brut / Incrustation</span>
+        </div>
+      </div>
+      <div class="trio-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/mobilier-02.jpg"></div>
+        <div class="trio-info">
+          <h4>Console «&nbsp;Linéa&nbsp;»</h4>
+          <span class="mat">Acier patiné</span>
+        </div>
+      </div>
+      <div class="trio-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/mobilier-03.jpg"></div>
+        <div class="trio-info">
+          <h4>Pied «&nbsp;Étoile&nbsp;»</h4>
+          <span class="mat">Acier brut / Soudure apparente</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTES & VERRIÈRES -->
+<section class="ferronnerie" id="ferronnerie">
+  <div class="container">
+    <div class="section-eyebrow">
+      <span class="section-num">— 04 / Portes &amp; Verrières</span>
+    </div>
+    <h2 class="section-title reveal">
+      Lignes <span class="italic">architecturales</span>,<br/>fer et verre en dialogue.
+    </h2>
+
+    <div class="mob-grid">
+      <div class="mob-cell mob-1 reveal-image">
+        <div class="mob-img inner img-bg img-treat" data-src="./photos/verriere-01.jpg"></div>
+        <div class="mob-info">
+          <h4>Verrière de pignon</h4>
+          <span class="mat">Acier thermolaqué / Sur-mesure</span>
+        </div>
+      </div>
+      <div class="mob-cell mob-2 reveal-image">
+        <div class="mob-img inner img-bg img-treat" data-src="./photos/porte-01.jpg"></div>
+        <div class="mob-info">
+          <h4>Porte d'entrée</h4>
+          <span class="mat">Ferronnerie / Volutes</span>
+        </div>
+      </div>
+      <div class="mob-cell mob-3 reveal-image">
+        <div class="mob-img inner img-bg img-treat" data-src="./photos/verriere-02.jpg"></div>
+        <div class="mob-info">
+          <h4>Lanterneau façade</h4>
+          <span class="mat">Acier / Verre feuilleté</span>
+        </div>
+      </div>
+      <div class="mob-cell mob-4 reveal-image">
+        <div class="mob-img inner img-bg img-treat" data-src="./photos/verriere-03.jpg"></div>
+        <div class="mob-info">
+          <h4>Auvent triangulé</h4>
+          <span class="mat">Acier noirci / Structure</span>
+        </div>
+      </div>
+      <div class="mob-cell mob-5 reveal-image">
+        <div class="mob-img inner img-bg img-treat" data-src="./photos/porte-02.jpg"></div>
+        <div class="mob-info">
+          <h4>Grille intérieure</h4>
+          <span class="mat">Ferronnerie ancienne / Motifs</span>
+        </div>
+      </div>
+      <div class="mob-cell mob-6 reveal-image">
+        <div class="mob-img inner img-bg img-treat" data-src="./photos/linteau-01.jpg"></div>
+        <div class="mob-info">
+          <h4>Linteau floral</h4>
+          <span class="mat">Découpé main / Acier noir</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATELIER -->
+<section class="atelier-section" id="atelier">
+  <div class="container">
+    <div class="section-eyebrow">
+      <span class="section-num">— 05 / Atelier</span>
+    </div>
+    <h2 class="section-title reveal">
+      <span class="italic">Le geste</span>,<br/>avant la pièce.
+    </h2>
+
+    <div class="atelier-grid">
+      <div class="atelier-cell a-1 reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/atelier-01.jpg"></div>
+        <div class="atelier-info">
+          <span class="step">Pose · Charpente</span>
+          <h4>Hauteur cathédrale</h4>
+        </div>
+      </div>
+      <div class="atelier-cell a-2 reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/atelier-03.jpg"></div>
+        <div class="atelier-info">
+          <span class="step">Forge</span>
+          <h4>Pièce sur tréteaux</h4>
+        </div>
+      </div>
+      <div class="atelier-cell a-3 reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/atelier-04.jpg"></div>
+        <div class="atelier-info">
+          <span class="step">Pose</span>
+          <h4>Escalier en montage</h4>
+        </div>
+      </div>
+      <div class="atelier-cell a-4 reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/atelier-05.jpg"></div>
+        <div class="atelier-info">
+          <span class="step">Finition</span>
+          <h4>Main courante</h4>
+        </div>
+      </div>
+      <div class="atelier-cell a-5 reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/atelier-02.jpg"></div>
+        <div class="atelier-info">
+          <span class="step">L'espace</span>
+          <h4>Lumière sur charpente</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSUS -->
+<section class="process">
+  <div class="container">
+    <div class="process-layout">
+      <div class="process-sticky">
+        <span class="eyebrow" style="display: block; margin-bottom: 2rem;">— 06 / Processus</span>
+        <h2>
+          Trois <span class="italic">temps</span>,<br/>une seule main.
+        </h2>
+        <p class="lead">
+          Du premier croquis au dernier réglage sur site, chaque pièce est suivie par la même personne. Aucune sous-traitance, aucun intermédiaire.
+        </p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="num">01</div>
+          <div>
+            <h3>Dessin</h3>
+            <p>Visite du lieu, relevés au laser, esquisses au crayon gras. Nous cherchons la ligne juste avant d'allumer la moindre flamme. Plans techniques validés avec l'architecte ou le client.</p>
+            <div class="duration">2 à 6 semaines</div>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="num">02</div>
+          <div>
+            <h3>Forge</h3>
+            <p>Découpe, pliage, soudure, patine au chalumeau. Tout est fait dans notre atelier, à la main, avec une exigence artisanale totale. Photos d'avancement régulières envoyées au client.</p>
+            <div class="duration">6 à 14 semaines</div>
+          </div>
+        </div>
+        <div class="process-step reveal">
+          <div class="num">03</div>
+          <div>
+            <h3>Pose</h3>
+            <p>Livraison, assemblage sur site, réglages au millimètre. Nous ne quittons jamais un chantier avant que la pièce ne soit exactement à sa place — et que le client ne l'ait validée.</p>
+            <div class="duration">2 à 5 jours</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-glow"></div>
+  <div class="contact-inner">
+    <div class="contact-eyebrow reveal">
+      <span class="eyebrow">— 07 / Contact</span>
+    </div>
+    <h2 class="contact-title reveal">
+      Parlons de<br/>
+      <span class="accent">votre projet.</span>
+    </h2>
+
+    <form class="contact-form reveal" action="[[ ENDPOINT_FORMULAIRE ]]" method="POST" novalidate>
+      <div class="field">
+        <label for="cf-name">Nom complet</label>
+        <input type="text" id="cf-name" name="name" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for="cf-email">Courriel</label>
+        <input type="email" id="cf-email" name="email" autocomplete="email" required />
+      </div>
+      <div class="field field-wide">
+        <label for="cf-project">Type de projet</label>
+        <select id="cf-project" name="project">
+          <option value="escalier">Escalier</option>
+          <option value="cheminee">Cheminée</option>
+          <option value="mobilier">Mobilier</option>
+          <option value="verriere">Verrière</option>
+          <option value="autre">Autre / Plusieurs pièces</option>
+        </select>
+      </div>
+      <div class="field field-wide">
+        <label for="cf-message">Votre projet en quelques lignes</label>
+        <textarea id="cf-message" name="message" rows="5" required></textarea>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="cta-button">
+          Envoyer la demande <span class="arrow"></span>
+        </button>
+      </div>
+      <div class="form-status" role="status" aria-live="polite"></div>
+    </form>
+
+    <div class="contact-grid">
+      <div class="contact-item reveal">
+        <span class="label">Atelier</span>
+        <p>1238 chemin de Vacquiers<br/>31380 Montjoire</p>
+      </div>
+      <div class="contact-item reveal">
+        <span class="label">Téléphone</span>
+        <a href="tel:+33660148649">06 60 14 86 49</a>
+      </div>
+      <div class="contact-item reveal">
+        <span class="label">Courriel</span>
+        <a href="mailto:just.bordas@gmail.com">just.bordas@gmail.com</a>
+      </div>
+      <div class="contact-item reveal">
+        <span class="label">Sur rendez-vous</span>
+        <p>Uniquement sur rendez-vous<br/>Par téléphone ou courriel</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© Just Bordas <span id="year"></span></div>
+  <div>Ferronnerie d'art · Vitrerie · Sur mesure</div>
+  <div><a href="./mentions.html">Mentions légales</a></div>
+  <div>Forgé main · Livré en France</div>
+</footer>
+
+<!-- LIGHTBOX (image en plein écran, ouvert au clic sur une carte) -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Vue agrandie">
+  <button class="lightbox-close" type="button" aria-label="Fermer">Fermer</button>
+  <img class="lightbox-img" id="lightboxImg" alt="" />
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+</body>
+</html>
