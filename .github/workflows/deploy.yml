@@ -29,7 +29,7 @@ jobs:
         # photos, workflow CI) reste dans le repo mais n'est pas exposé en ligne.
         run: |
           mkdir -p _site/photos
-          cp index.html mentions.html styles.css script.js og-image.jpg _site/
+          cp index.html mentions.html galerie.html styles.css script.js og-image.jpg robots.txt sitemap.xml _site/
           cp photos/*.jpg photos/*.webp _site/photos/
           # Sanity check : on s'assure que rien d'indésirable n'a fuité
           echo "Fichiers publiés :"

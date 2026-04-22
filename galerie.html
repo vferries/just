@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Galerie — Just Bordas, Ferronnerie d'art</title>
+<meta name="description" content="Détails, vues de chantier et angles complémentaires des pièces Just Bordas — escaliers, cheminées, mobilier, verrières." />
+<meta name="theme-color" content="#07070a" />
+
+<link rel="canonical" href="https://vferries.github.io/just/galerie.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:site_name" content="Just Bordas" />
+<meta property="og:title" content="Galerie — Just Bordas" />
+<meta property="og:description" content="Détails, vues de chantier et angles complémentaires des pièces Just Bordas." />
+<meta property="og:url" content="https://vferries.github.io/just/galerie.html" />
+<meta property="og:image" content="https://vferries.github.io/just/og-image.jpg" />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%2307070a'/><circle cx='32' cy='32' r='11' fill='%23ff7a2e'/><circle cx='32' cy='32' r='4' fill='%23fff4d6'/></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter+Tight:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="./styles.css" />
+<script src="./script.js" defer></script>
+</head>
+<body>
+
+<canvas id="sparks-canvas"></canvas>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<nav id="nav">
+  <a href="./index.html" class="logo">Just Bordas</a>
+  <div class="nav-links">
+    <a href="./index.html#intro">Manifeste</a>
+    <a href="./index.html#escaliers">Escaliers</a>
+    <a href="./index.html#cheminees">Cheminées</a>
+    <a href="./index.html#mobilier">Mobilier</a>
+    <a href="./index.html#ferronnerie">Portes &amp; Verrières</a>
+    <a href="./index.html#atelier">Atelier</a>
+    <a href="./galerie.html">Galerie</a>
+    <a href="./index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<main class="galerie-page">
+  <div class="container">
+    <div class="section-eyebrow">
+      <span class="section-num">— Galerie</span>
+    </div>
+    <h1 class="section-title">Détails <span class="italic">&amp; vues complémentaires</span>.</h1>
+    <p class="galerie-intro reveal">
+      Des angles qui n'entrent pas dans les grilles principales — détails de finition, vues de chantier, variations autour d'une même pièce.
+    </p>
+
+    <div class="galerie-grid">
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-01.jpg"></div>
+        <div class="galerie-info">
+          <h4>Table «&nbsp;Occitane&nbsp;»</h4>
+          <span class="mat">Vue d'ensemble</span>
+        </div>
+      </div>
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-02.jpg"></div>
+        <div class="galerie-info">
+          <h4>Table «&nbsp;Occitane&nbsp;»</h4>
+          <span class="mat">Contre-plongée</span>
+        </div>
+      </div>
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-03.jpg"></div>
+        <div class="galerie-info">
+          <h4>Croix occitane</h4>
+          <span class="mat">Incrustation acier</span>
+        </div>
+      </div>
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-04.jpg"></div>
+        <div class="galerie-info">
+          <h4>Assemblage pied</h4>
+          <span class="mat">Vue dessous</span>
+        </div>
+      </div>
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-05.jpg"></div>
+        <div class="galerie-info">
+          <h4>Table &amp; cheminée</h4>
+          <span class="mat">Intégration salon</span>
+        </div>
+      </div>
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-06.jpg"></div>
+        <div class="galerie-info">
+          <h4>Pied «&nbsp;Étoile&nbsp;»</h4>
+          <span class="mat">Structure nue</span>
+        </div>
+      </div>
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-07.jpg"></div>
+        <div class="galerie-info">
+          <h4>Escalier acier &amp; verre</h4>
+          <span class="mat">Chantier</span>
+        </div>
+      </div>
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-08.jpg"></div>
+        <div class="galerie-info">
+          <h4>Main courante</h4>
+          <span class="mat">Inox poli</span>
+        </div>
+      </div>
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-09.jpg"></div>
+        <div class="galerie-info">
+          <h4>Crémaillère</h4>
+          <span class="mat">Vue de la volée</span>
+        </div>
+      </div>
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-10.jpg"></div>
+        <div class="galerie-info">
+          <h4>Escalier suspendu</h4>
+          <span class="mat">Vue plongée</span>
+        </div>
+      </div>
+      <div class="galerie-cell reveal-image">
+        <div class="inner img-bg img-treat" data-src="./photos/galerie-11.jpg"></div>
+        <div class="galerie-info">
+          <h4>Marches ardoise</h4>
+          <span class="mat">Préparation au sol</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="./index.html" class="legal-back">← Retour à l'accueil</a>
+  </div>
+</main>
+
+<footer>
+  <div>© Just Bordas <span id="year"></span></div>
+  <div>Ferronnerie d'art · Vitrerie · Sur mesure</div>
+  <div><a href="./mentions.html">Mentions légales</a></div>
+  <div>Forgé main · Livré en France</div>
+</footer>
+
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Vue agrandie">
+  <button class="lightbox-close" type="button" aria-label="Fermer">Fermer</button>
+  <img class="lightbox-img" id="lightboxImg" alt="" />
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+</body>
+</html>

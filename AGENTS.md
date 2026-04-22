@@ -123,12 +123,14 @@ Pipeline non-destructif : les fichiers restent neutres, le rendu éditorial (gra
 5. Le JS détecte WebP à l'exécution : les navigateurs modernes chargent le `.webp` (~30 % plus léger), les autres retombent sur le `.jpg`
 6. Idempotent : le script saute les fichiers dont les sorties sont plus récentes que la source
 
-**Slots actuellement référencés** (à remplir ou à ajuster dans `index.html`) :
-- `escalier-01` à `escalier-04` (section 01)
-- `cheminee-01` à `cheminee-02` (section 02 — 2 vues de la cheminée «&nbsp;Goutte&nbsp;»)
-- `mobilier-01` à `mobilier-03` (section 03 — trio : table Occitane, console, pied étoile)
-- `verriere-01` à `verriere-03`, `porte-01`, `porte-02`, `linteau-01` (section 04 Portes & Verrières)
-- `atelier-01` à `atelier-05` (section 05 Atelier — chantier + fabrication)
+**Slots actuellement référencés** :
+- `escalier-01` à `escalier-04` (section 01, index.html)
+- `cheminee-01` à `cheminee-02` (section 02, index.html — 2 vues de la cheminée «&nbsp;Goutte&nbsp;»)
+- `mobilier-01` à `mobilier-03` (section 03, index.html — trio : table Occitane, console, pied étoile)
+- `verriere-01` à `verriere-03`, `porte-01`, `porte-02`, `linteau-01` (section 04, index.html)
+- `atelier-01` à `atelier-05` (section 05, index.html)
+- `galerie-01` à `galerie-11` (galerie.html — détails et vues complémentaires)
+- `mobilier-04` (source seule, non référencée — sert de base à `og-image.jpg`)
 
 ---
 
@@ -151,7 +153,69 @@ Pipeline non-destructif : les fichiers restent neutres, le rendu éditorial (gra
 
 ---
 
-## 7. Évolutions prioritaires si demandées
+## 7. Maintenance des infos métier
+
+Les informations de l'atelier (nom, adresse, téléphone, email, SIRET, URL) sont **écrites en clair** dans le HTML — pas de CMS, pas de variables d'environnement. Si elles changent, il faut les mettre à jour dans plusieurs endroits. Voici le mapping pour retrouver qui est où.
+
+### Table de correspondance
+
+| Info | Valeur actuelle (avril 2026) | Fichiers à modifier |
+|---|---|---|
+| **Nom commercial** | Just Bordas | `index.html` (title, meta, hero, nav logo, footer), `mentions.html` (title, meta, nav logo, éditeur, footer), `galerie.html` (title, meta, nav logo, footer), `og-image.jpg` (visuel) |
+| **Raison sociale** | Monsieur Just Bordas | `mentions.html` (bloc Éditeur) uniquement |
+| **URL canonique** | `https://vferries.github.io/just/` | `index.html` (canonical, og:url, og:image, twitter:image), `galerie.html` (canonical, og:url, og:image), `sitemap.xml` (3 `<loc>`), `robots.txt` (Sitemap:), `AGENTS.md` (§6, §7), `.github/workflows/deploy.yml` (rien à changer, le déploiement utilise `github.github.io/<repo>/` automatiquement) |
+| **Téléphone** | 06 60 14 86 49 / `tel:+33660148649` | `index.html` (contact-grid), `mentions.html` (bloc Contact) |
+| **Email** | just.bordas@gmail.com | `index.html` (contact-grid mailto, form action FormSubmit), `mentions.html` (contact + RGPD) |
+| **Adresse** | 1238 chemin de Vacquiers, 31380 Montjoire | `index.html` (contact-grid), `mentions.html` (bloc Éditeur) |
+| **SIRET** | 814 197 661 00022 | `mentions.html` uniquement |
+| **Code APE** | 2312Z — Façonnage et transformation du verre plat | `mentions.html` uniquement |
+| **TVA intra** | FR08 814 197 661 | `mentions.html` uniquement |
+| **Année création** | 2015 (EST. 2015 dans le hero) | `index.html` (hero-meta) |
+| **Hébergeur** | GitHub, Inc. (88 Colin P. Kelly Jr. Street, SF) | `mentions.html` (bloc Hébergement) |
+| **Concepteur** | Vincent Ferries | `mentions.html` (bloc Crédits) |
+
+### Commandes de vérification rapide
+
+```bash
+# Recherche globale d'une info dans tout le repo
+grep -rn "Just Bordas" --include="*.html" --include="*.xml"
+grep -rn "vferries.github.io" --include="*.html" --include="*.xml" --include="*.txt" --include="*.md"
+grep -rn "06 60 14 86 49\|660148649" --include="*.html"
+grep -rn "just.bordas@gmail.com" --include="*.html"
+
+# Lister tous les placeholders restants (doit retourner 0 ligne sur un site prêt)
+grep -rn "\[\[" --include="*.html"
+```
+
+### Scénarios courants
+
+**Si l'URL du site change** (ex : acquisition d'un domaine custom `just-bordas.fr`) :
+1. Mettre à jour `index.html` : `canonical`, `og:url`, `og:image`, `twitter:image` (4 occurrences)
+2. Mettre à jour `galerie.html` : `canonical`, `og:url`, `og:image` (3 occurrences)
+3. Mettre à jour `sitemap.xml` : 3 balises `<loc>`
+4. Mettre à jour `robots.txt` : ligne `Sitemap:`
+5. Mettre à jour ce tableau dans `AGENTS.md`
+6. Ajouter un fichier `CNAME` à la racine contenant le domaine (ex : `just-bordas.fr`) — GitHub Pages le détecte et déclenche la config DNS
+7. Mettre à jour la fiche Google Business Profile avec la nouvelle URL
+8. Soumettre la nouvelle `sitemap.xml` dans Google Search Console
+
+**Si le nom commercial change** : remplacer partout via `grep -rln "Just Bordas" | xargs sed -i 's/Just Bordas/Nouveau Nom/g'` puis régénérer `og-image.jpg` si elle contenait le nom (actuellement non). Mettre à jour aussi la fiche Google Business.
+
+**Si l'email change** : remplacer `just.bordas@gmail.com` (grep au-dessus), **plus** reconfigurer FormSubmit avec la nouvelle adresse (changer l'`action` du formulaire dans `index.html` et réactiver via le premier envoi).
+
+**Si le téléphone change** : attention au double format — `06 60 14 86 49` (affichage) et `tel:+33660148649` (href). Les deux à changer.
+
+**Si une info légale change** (SIRET, forme juridique, adresse du siège) : uniquement `mentions.html`, bloc "Éditeur du site".
+
+### Après modification
+
+- Commit avec un message descriptif
+- Push → déploiement automatique en 1–2 min
+- Vérifier sur la preview en ligne avec `grep` console (cf. section "Commandes de vérification")
+
+---
+
+## 8. Évolutions prioritaires si demandées
 
 Déjà livré (avril 2026) :
 - ✅ Page `mentions.html` (charte partagée, lien dans le footer)
@@ -167,7 +231,7 @@ Restant si demandé :
 
 ---
 
-## 8. Évolutions à refuser
+## 9. Évolutions à refuser
 
 Si l'utilisateur demande, expliquer poliment pourquoi c'est contraire à la direction du projet :
 
@@ -180,7 +244,7 @@ Si l'utilisateur demande, expliquer poliment pourquoi c'est contraire à la dire
 
 ---
 
-## 9. Contact
+## 10. Contact
 
 Si tu es un agent IA qui reprend ce projet et que quelque chose te paraît incohérent avec ces docs, **demande avant de modifier**. Il y a probablement une raison historique derrière la bizarrerie, et la liste des bugs passés (section 3) n'est pas exhaustive.
 

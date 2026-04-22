@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vferries.github.io/just/sitemap.xml
