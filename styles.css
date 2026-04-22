@@ -167,11 +167,12 @@
     font-size: clamp(2.5rem, 7vw, 5rem);
     font-style: italic;
     color: var(--ink);
-    overflow: hidden;
+    /* Pas d'overflow:hidden : clipperait les descendants italiques (j, g, y…). */
   }
   .loader-mark span {
     display: inline-block;
-    transform: translateY(110%);
+    opacity: 0;
+    transform: translateY(40%);
     animation: loader-rise 1s cubic-bezier(0.16,1,0.3,1) forwards;
   }
   .loader-bar {
@@ -190,7 +191,7 @@
     transform: scaleX(0);
     animation: loader-fill 1.8s ease forwards 0.4s;
   }
-  @keyframes loader-rise { to { transform: translateY(0); } }
+  @keyframes loader-rise { to { opacity: 1; transform: translateY(0); } }
   @keyframes loader-fill { to { transform: scaleX(1); } }
 
   /* ========== NAV ========== */
