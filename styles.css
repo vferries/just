@@ -278,7 +278,9 @@
     font-size: clamp(3.5rem, 14vw, 16rem);
     font-weight: 400;
     line-height: 0.85;
-    letter-spacing: -0.04em;
+    /* -0.02em plutôt que -0.04em : à 200 px+, l'italique du Bodoni a des hampes/boucles
+       qui se télescopent (notamment f+e) au-delà de -0.02em. */
+    letter-spacing: -0.02em;
     font-style: italic;
   }
   .hero-title .word {
@@ -895,7 +897,7 @@
     line-height: 0.85;
     font-style: italic;
     font-weight: 400;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.02em;
     margin-bottom: 4rem;
   }
   .contact-title .accent { color: var(--spark); }
