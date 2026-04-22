@@ -276,7 +276,7 @@
       requestAnimationFrame(ringLoop);
     }
     ringLoop();
-    document.querySelectorAll('a, button, .h-card, .mob-cell, .chem-piece, .trio-cell, .atelier-cell').forEach(function(el) {
+    document.querySelectorAll('a, button, .h-card, .mob-cell, .chem-piece, .trio-cell, .atelier-cell, .galerie-cell').forEach(function(el) {
       el.addEventListener('mouseenter', function() {
         cursor.classList.add('hover'); ring.classList.add('hover');
       });
@@ -557,7 +557,7 @@
       openLightbox(src, caption, title);
     }
 
-    document.querySelectorAll('.h-card, .chem-piece, .mob-cell, .trio-cell, .atelier-cell').forEach(function(card) {
+    document.querySelectorAll('.h-card, .chem-piece, .mob-cell, .trio-cell, .atelier-cell, .galerie-cell').forEach(function(card) {
       card.setAttribute('role', 'button');
       card.setAttribute('tabindex', '0');
       card.addEventListener('click', function() { handleCardOpen(card); });
