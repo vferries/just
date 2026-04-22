@@ -285,21 +285,20 @@
   }
   .hero-title .word {
     display: inline-block;
-    overflow: hidden;
-    vertical-align: top;
-    /* Ajoute de la place sous la baseline pour que les descendants italiques (f, g, y…)
-       ne soient pas clippés par overflow:hidden. Le margin-bottom négatif compense pour
-       ne pas écarter les lignes du titre. */
-    padding-bottom: 0.22em;
-    margin-bottom: -0.22em;
+    /* Pas d'overflow: hidden ici : les italiques Bodoni ont des swashes/descendants
+       qui sortent de leur boîte et doivent rester visibles. Le reveal se fait par
+       opacity + translate sur le span enfant. */
   }
   .hero-title .word > span {
     display: inline-block;
-    transform: translateY(110%);
+    opacity: 0;
+    transform: translateY(40%);
     animation: title-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     animation-delay: calc(var(--i) * 0.15s + 1.6s);
   }
-  @keyframes title-rise { to { transform: translateY(0); } }
+  @keyframes title-rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
