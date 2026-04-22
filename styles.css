@@ -278,15 +278,20 @@
     font-size: clamp(3.5rem, 14vw, 16rem);
     font-weight: 400;
     line-height: 0.85;
-    /* -0.02em plutôt que -0.04em : à 200 px+, l'italique du Bodoni a des hampes/boucles
-       qui se télescopent (notamment f+e) au-delà de -0.02em. */
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     font-style: italic;
+    /* Les ligatures standards (fi, fl, fe…) collent les glyphes italiques ; on les neutralise. */
+    font-variant-ligatures: none;
   }
   .hero-title .word {
     display: inline-block;
     overflow: hidden;
     vertical-align: top;
+    /* Ajoute de la place sous la baseline pour que les descendants italiques (f, g, y…)
+       ne soient pas clippés par overflow:hidden. Le margin-bottom négatif compense pour
+       ne pas écarter les lignes du titre. */
+    padding-bottom: 0.22em;
+    margin-bottom: -0.22em;
   }
   .hero-title .word > span {
     display: inline-block;
