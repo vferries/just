@@ -1032,6 +1032,11 @@
     color: var(--ink-muted);
     margin-bottom: 0.75rem;
   }
+  .contact-form label .opt {
+    letter-spacing: 0.15em;
+    opacity: 0.6;
+    margin-left: 0.4em;
+  }
   .contact-form input,
   .contact-form textarea,
   .contact-form select {
