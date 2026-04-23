@@ -30,7 +30,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter+Tight:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,400&family=Inter+Tight:wght@300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="./styles.css" />
 <script src="./script.js" defer></script>
@@ -121,7 +121,12 @@
 
     <div class="horizontal-track" id="horizontalTrack">
       <div class="h-card">
-        <div class="h-card-image img-bg img-treat" data-src="./photos/escalier-01.jpg"></div>
+        <div class="h-card-image img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/escalier-01-640.webp 640w, ./photos/escalier-01-1024.webp 1024w, ./photos/escalier-01-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" />
+            <img src="./photos/escalier-01-1024.jpg" srcset="./photos/escalier-01-640.jpg 640w, ./photos/escalier-01-1024.jpg 1024w, ./photos/escalier-01-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 50vw" alt="Escalier hélicoïdal «Aube» — acier noirci et chêne" width="1200" height="1600" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="h-card-info">
           <span class="num">N° 01 — 2025</span>
           <h3>Hélicoïdal «&nbsp;Aube&nbsp;»</h3>
@@ -129,7 +134,12 @@
         </div>
       </div>
       <div class="h-card">
-        <div class="h-card-image img-bg img-treat" data-src="./photos/escalier-02.jpg"></div>
+        <div class="h-card-image img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/escalier-02-640.webp 640w, ./photos/escalier-02-1024.webp 1024w, ./photos/escalier-02-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" />
+            <img src="./photos/escalier-02-1024.jpg" srcset="./photos/escalier-02-640.jpg 640w, ./photos/escalier-02-1024.jpg 1024w, ./photos/escalier-02-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 50vw" alt="Escalier à crémaillère droite — acier brut et verre feuilleté" width="1200" height="1600" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="h-card-info">
           <span class="num">N° 02 — 2024</span>
           <h3>Crémaillère droite</h3>
@@ -137,7 +147,12 @@
         </div>
       </div>
       <div class="h-card">
-        <div class="h-card-image img-bg img-treat" data-src="./photos/escalier-03.jpg"></div>
+        <div class="h-card-image img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/escalier-03-640.webp 640w, ./photos/escalier-03-1024.webp 1024w, ./photos/escalier-03-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" />
+            <img src="./photos/escalier-03-1024.jpg" srcset="./photos/escalier-03-640.jpg 640w, ./photos/escalier-03-1024.jpg 1024w, ./photos/escalier-03-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 50vw" alt="Escalier suspendu en porte-à-faux — cantilever sur pierre sèche" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="h-card-info">
           <span class="num">N° 03 — 2024</span>
           <h3>Suspendu en porte-à-faux</h3>
@@ -145,7 +160,12 @@
         </div>
       </div>
       <div class="h-card">
-        <div class="h-card-image img-bg img-treat" data-src="./photos/escalier-04.jpg"></div>
+        <div class="h-card-image img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/escalier-04-640.webp 640w, ./photos/escalier-04-1024.webp 1024w, ./photos/escalier-04-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" />
+            <img src="./photos/escalier-04-1024.jpg" srcset="./photos/escalier-04-640.jpg 640w, ./photos/escalier-04-1024.jpg 1024w, ./photos/escalier-04-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 50vw" alt="Escalier double quart-tournant, hôtel particulier du XVIIIᵉ siècle" width="1200" height="1600" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="h-card-info">
           <span class="num">N° 04 — 2023</span>
           <h3>Double quart-tournant</h3>
@@ -177,7 +197,12 @@
       <div class="chem-gallery">
         <div class="chem-piece reveal-stagger">
           <div class="chem-piece-img reveal-image">
-            <div class="inner img-bg img-treat" data-src="./photos/cheminee-01.jpg"></div>
+            <div class="inner img-bg">
+              <picture>
+                <source type="image/webp" srcset="./photos/cheminee-01-640.webp 640w, ./photos/cheminee-01-1024.webp 1024w, ./photos/cheminee-01-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" />
+                <img src="./photos/cheminee-01-1024.jpg" srcset="./photos/cheminee-01-640.jpg 640w, ./photos/cheminee-01-1024.jpg 1024w, ./photos/cheminee-01-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 50vw" alt="Cheminée suspendue «Goutte» — hotte en acier" width="1600" height="2133" loading="lazy" decoding="async" class="img-treat" />
+              </picture>
+            </div>
           </div>
           <div class="chem-piece-meta">
             <h3>«&nbsp;Goutte&nbsp;»</h3>
@@ -186,7 +211,12 @@
         </div>
         <div class="chem-piece reveal-stagger">
           <div class="chem-piece-img reveal-image">
-            <div class="inner img-bg img-treat" data-src="./photos/cheminee-02.jpg"></div>
+            <div class="inner img-bg">
+              <picture>
+                <source type="image/webp" srcset="./photos/cheminee-02-640.webp 640w, ./photos/cheminee-02-1024.webp 1024w, ./photos/cheminee-02-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 50vw" />
+                <img src="./photos/cheminee-02-1024.jpg" srcset="./photos/cheminee-02-640.jpg 640w, ./photos/cheminee-02-1024.jpg 1024w, ./photos/cheminee-02-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 50vw" alt="Cheminée intégrée au salon — chêne et acier" width="1200" height="1600" loading="lazy" decoding="async" class="img-treat" />
+              </picture>
+            </div>
           </div>
           <div class="chem-piece-meta">
             <h3>Intégration salon</h3>
@@ -224,21 +254,36 @@
 
     <div class="mobilier-trio">
       <div class="trio-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/mobilier-01.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/mobilier-01-640.webp 640w, ./photos/mobilier-01-1024.webp 1024w, ./photos/mobilier-01-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/mobilier-01-1024.jpg" srcset="./photos/mobilier-01-640.jpg 640w, ./photos/mobilier-01-1024.jpg 1024w, ./photos/mobilier-01-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Table «Occitane» — chêne, acier brut et incrustation" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="trio-info">
           <h4>Table «&nbsp;Occitane&nbsp;»</h4>
           <span class="mat">Chêne / Acier brut / Incrustation</span>
         </div>
       </div>
       <div class="trio-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/mobilier-02.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/mobilier-02-640.webp 640w, ./photos/mobilier-02-1024.webp 1024w, ./photos/mobilier-02-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/mobilier-02-1024.jpg" srcset="./photos/mobilier-02-640.jpg 640w, ./photos/mobilier-02-1024.jpg 1024w, ./photos/mobilier-02-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Console «Linéa» — acier" width="1600" height="2133" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="trio-info">
           <h4>Console «&nbsp;Linéa&nbsp;»</h4>
           <span class="mat">Acier</span>
         </div>
       </div>
       <div class="trio-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/mobilier-03.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/mobilier-03-640.webp 640w, ./photos/mobilier-03-1024.webp 1024w, ./photos/mobilier-03-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/mobilier-03-1024.jpg" srcset="./photos/mobilier-03-640.jpg 640w, ./photos/mobilier-03-1024.jpg 1024w, ./photos/mobilier-03-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Pied «Étoile» — acier brut avec soudure apparente" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="trio-info">
           <h4>Pied «&nbsp;Étoile&nbsp;»</h4>
           <span class="mat">Acier brut / Soudure apparente</span>
@@ -260,42 +305,72 @@
 
     <div class="mob-grid">
       <div class="mob-cell mob-1 reveal-image">
-        <div class="mob-img inner img-bg img-treat" data-src="./photos/verriere-01.jpg"></div>
+        <div class="mob-img inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/verriere-01-640.webp 640w, ./photos/verriere-01-1024.webp 1024w, ./photos/verriere-01-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 50vw" />
+            <img src="./photos/verriere-01-1024.jpg" srcset="./photos/verriere-01-640.jpg 640w, ./photos/verriere-01-1024.jpg 1024w, ./photos/verriere-01-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 50vw" alt="Verrière de pignon sur mesure — acier thermolaqué" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="mob-info">
           <h4>Verrière de pignon</h4>
           <span class="mat">Acier thermolaqué / Sur-mesure</span>
         </div>
       </div>
       <div class="mob-cell mob-2 reveal-image">
-        <div class="mob-img inner img-bg img-treat" data-src="./photos/porte-01.jpg"></div>
+        <div class="mob-img inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/porte-01-640.webp 640w, ./photos/porte-01-1024.webp 1024w, ./photos/porte-01-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 50vw" />
+            <img src="./photos/porte-01-1024.jpg" srcset="./photos/porte-01-640.jpg 640w, ./photos/porte-01-1024.jpg 1024w, ./photos/porte-01-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 50vw" alt="Porte d'entrée en ferronnerie — volutes" width="1600" height="2133" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="mob-info">
           <h4>Porte d'entrée</h4>
           <span class="mat">Ferronnerie / Volutes</span>
         </div>
       </div>
       <div class="mob-cell mob-3 reveal-image">
-        <div class="mob-img inner img-bg img-treat" data-src="./photos/verriere-02.jpg"></div>
+        <div class="mob-img inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/verriere-02-640.webp 640w, ./photos/verriere-02-1024.webp 1024w, ./photos/verriere-02-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 25vw" />
+            <img src="./photos/verriere-02-1024.jpg" srcset="./photos/verriere-02-640.jpg 640w, ./photos/verriere-02-1024.jpg 1024w, ./photos/verriere-02-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 25vw" alt="Lanterneau de façade — acier et verre feuilleté" width="1600" height="2133" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="mob-info">
           <h4>Lanterneau façade</h4>
           <span class="mat">Acier / Verre feuilleté</span>
         </div>
       </div>
       <div class="mob-cell mob-4 reveal-image">
-        <div class="mob-img inner img-bg img-treat" data-src="./photos/verriere-03.jpg"></div>
+        <div class="mob-img inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/verriere-03-640.webp 640w, ./photos/verriere-03-1024.webp 1024w, ./photos/verriere-03-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 25vw" />
+            <img src="./photos/verriere-03-1024.jpg" srcset="./photos/verriere-03-640.jpg 640w, ./photos/verriere-03-1024.jpg 1024w, ./photos/verriere-03-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 25vw" alt="Auvent triangulé — acier noirci, structure apparente" width="1600" height="2133" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="mob-info">
           <h4>Auvent triangulé</h4>
           <span class="mat">Acier noirci / Structure</span>
         </div>
       </div>
       <div class="mob-cell mob-5 reveal-image">
-        <div class="mob-img inner img-bg img-treat" data-src="./photos/porte-02.jpg"></div>
+        <div class="mob-img inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/porte-02-640.webp 640w, ./photos/porte-02-1024.webp 1024w, ./photos/porte-02-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 33vw" />
+            <img src="./photos/porte-02-1024.jpg" srcset="./photos/porte-02-640.jpg 640w, ./photos/porte-02-1024.jpg 1024w, ./photos/porte-02-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 33vw" alt="Grille intérieure — ferronnerie ancienne à motifs" width="1600" height="2133" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="mob-info">
           <h4>Grille intérieure</h4>
           <span class="mat">Ferronnerie ancienne / Motifs</span>
         </div>
       </div>
       <div class="mob-cell mob-6 reveal-image">
-        <div class="mob-img inner img-bg img-treat" data-src="./photos/linteau-01.jpg"></div>
+        <div class="mob-img inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/linteau-01-640.webp 640w, ./photos/linteau-01-1024.webp 1024w, ./photos/linteau-01-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 42vw" />
+            <img src="./photos/linteau-01-1024.jpg" srcset="./photos/linteau-01-640.jpg 640w, ./photos/linteau-01-1024.jpg 1024w, ./photos/linteau-01-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 42vw" alt="Imposte florale — verre sablé, motifs façonnés à la main" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="mob-info">
           <h4>Imposte florale</h4>
           <span class="mat">Verre sablé / Motifs main</span>
@@ -317,35 +392,60 @@
 
     <div class="atelier-grid">
       <div class="atelier-cell a-1 reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/atelier-01.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/atelier-01-640.webp 640w, ./photos/atelier-01-1024.webp 1024w, ./photos/atelier-01-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 50vw" />
+            <img src="./photos/atelier-01-1024.jpg" srcset="./photos/atelier-01-640.jpg 640w, ./photos/atelier-01-1024.jpg 1024w, ./photos/atelier-01-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 50vw" alt="Pose d'une charpente dans une pièce de hauteur cathédrale" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="atelier-info">
           <span class="step">Pose · Charpente</span>
           <h4>Hauteur cathédrale</h4>
         </div>
       </div>
       <div class="atelier-cell a-2 reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/atelier-03.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/atelier-03-640.webp 640w, ./photos/atelier-03-1024.webp 1024w, ./photos/atelier-03-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 50vw" />
+            <img src="./photos/atelier-03-1024.jpg" srcset="./photos/atelier-03-640.jpg 640w, ./photos/atelier-03-1024.jpg 1024w, ./photos/atelier-03-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 50vw" alt="Pièce en cours de façonnage sur tréteaux" width="1600" height="2133" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="atelier-info">
           <span class="step">Façonnage</span>
           <h4>Pièce sur tréteaux</h4>
         </div>
       </div>
       <div class="atelier-cell a-3 reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/atelier-04.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/atelier-04-640.webp 640w, ./photos/atelier-04-1024.webp 1024w, ./photos/atelier-04-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 33vw" />
+            <img src="./photos/atelier-04-1024.jpg" srcset="./photos/atelier-04-640.jpg 640w, ./photos/atelier-04-1024.jpg 1024w, ./photos/atelier-04-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 33vw" alt="Escalier en cours de montage sur chantier" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="atelier-info">
           <span class="step">Pose</span>
           <h4>Escalier en montage</h4>
         </div>
       </div>
       <div class="atelier-cell a-4 reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/atelier-05.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/atelier-05-640.webp 640w, ./photos/atelier-05-1024.webp 1024w, ./photos/atelier-05-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 33vw" />
+            <img src="./photos/atelier-05-1024.jpg" srcset="./photos/atelier-05-640.jpg 640w, ./photos/atelier-05-1024.jpg 1024w, ./photos/atelier-05-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 33vw" alt="Finition d'une main courante" width="1200" height="1600" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="atelier-info">
           <span class="step">Finition</span>
           <h4>Main courante</h4>
         </div>
       </div>
       <div class="atelier-cell a-5 reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/atelier-02.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/atelier-02-640.webp 640w, ./photos/atelier-02-1024.webp 1024w, ./photos/atelier-02-1600.webp 1600w" sizes="(max-width: 900px) 50vw, 33vw" />
+            <img src="./photos/atelier-02-1024.jpg" srcset="./photos/atelier-02-640.jpg 640w, ./photos/atelier-02-1024.jpg 1024w, ./photos/atelier-02-1600.jpg 1600w" sizes="(max-width: 900px) 50vw, 33vw" alt="Lumière traversant une charpente d'atelier" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="atelier-info">
           <span class="step">L'espace</span>
           <h4>Lumière sur charpente</h4>

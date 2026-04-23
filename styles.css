@@ -63,6 +63,20 @@
     filter: grayscale(0.25) brightness(0.92) contrast(1.08) sepia(0.1) hue-rotate(-5deg);
   }
 
+  /* Picture natif posé dans un conteneur img-bg : remplit toute la zone comme un background cover */
+  .img-bg > picture {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  .img-bg > picture > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
   /* ========== GRAIN ========== */
   body::before {
     content: "";
@@ -189,7 +203,7 @@
     background: var(--spark);
     transform-origin: left;
     transform: scaleX(0);
-    animation: loader-fill 1.8s ease forwards 0.4s;
+    animation: loader-fill 0.5s ease forwards 0.1s;
   }
   @keyframes loader-rise { to { opacity: 1; transform: translateY(0); } }
   @keyframes loader-fill { to { transform: scaleX(1); } }

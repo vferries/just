@@ -6,8 +6,14 @@
     var loader = document.getElementById('loader');
     if (loader) loader.classList.add('done');
   }
-  window.addEventListener('load', function() { setTimeout(dismissLoader, 2300); });
-  setTimeout(dismissLoader, 4000);
+  // Dismiss rapide dès que le DOM est prêt : le loader overlay cache le hero et plombe le LCP Lighthouse.
+  // On garde une courte respiration (500 ms) pour que la marque soit lisible avant la transition.
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(dismissLoader, 500);
+  } else {
+    document.addEventListener('DOMContentLoaded', function() { setTimeout(dismissLoader, 500); });
+  }
+  setTimeout(dismissLoader, 1800); // garde-fou absolu
 
   // ========== YEAR ==========
   var yearEl = document.getElementById('year');
@@ -183,62 +189,13 @@
     return svgUri(svg);
   }
 
-  // Détection WebP : on tente de rendre un 1x1 en webp ; si le data URL commence par "data:image/webp",
-  // le navigateur sait encoder (et donc décoder) le format.
-  var supportsWebp = (function() {
-    try {
-      var c = document.createElement('canvas');
-      return c.toDataURL && c.toDataURL('image/webp').indexOf('data:image/webp') === 0;
-    } catch (e) { return false; }
-  })();
-
-  // Application immédiate des placeholders, chargement lazy des vraies photos quand elles approchent du viewport.
-  // Si WebP est supporté ET que data-src pointe sur un .jpg/.png, on tente d'abord le .webp adjacent,
-  // avec fallback automatique sur la version JPG si le .webp n'existe pas.
-  function loadRealImage(el) {
-    var originalSrc = el.getAttribute('data-src');
-    if (!originalSrc) return;
-
-    var tryWebp = supportsWebp && /\.(jpe?g|png)$/i.test(originalSrc);
-    var firstSrc = tryWebp ? originalSrc.replace(/\.(jpe?g|png)$/i, '.webp') : originalSrc;
-
-    var img = new Image();
-    img.decoding = 'async';
-    img.onload = function() {
-      el.classList.add('img-treat');
-      el.style.backgroundImage = 'url("' + firstSrc + '")';
-    };
-    img.onerror = function() {
-      if (!tryWebp) return; // pas de second essai si on était déjà sur le format original
-      var fb = new Image();
-      fb.decoding = 'async';
-      fb.onload = function() {
-        el.classList.add('img-treat');
-        el.style.backgroundImage = 'url("' + originalSrc + '")';
-      };
-      fb.src = originalSrc;
-    };
-    img.src = firstSrc;
-  }
-
-  var imgObserver = 'IntersectionObserver' in window
-    ? new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            loadRealImage(entry.target);
-            imgObserver.unobserve(entry.target);
-          }
-        });
-      }, { rootMargin: '400px 0px' })
-    : null;
-
-  document.querySelectorAll('[data-src]').forEach(function(el, idx) {
+  // Les vraies photos sont désormais dans des <picture> natifs (lazy + srcset + WebP géré par le navigateur).
+  // Le placeholder SVG reste peint en background-image du conteneur .img-bg pour habiller la période
+  // pré-chargement (fetch lazy, DPR lent, réseau faible).
+  document.querySelectorAll('.img-bg').forEach(function(el, idx) {
+    if (!el.querySelector('picture')) return;
     var placeholder = generatePlaceholder(el, idx);
     el.style.backgroundImage = 'url("' + placeholder + '")';
-    // On retire le filtre img-treat pour les placeholders (ils sont déjà stylisés)
-    el.classList.remove('img-treat');
-    if (imgObserver) imgObserver.observe(el);
-    else loadRealImage(el); // Fallback : chargement immédiat si pas d'IO
   });
 
   // ========== SCROLL PROGRESS ==========
@@ -368,6 +325,7 @@
     // --- Énergie de scroll : monte quand on scrolle, redescend en quelques frames ---
     var lastScrollY = window.scrollY;
     var scrollEnergy = 0;
+    var rafId = null;
 
     window.addEventListener('scroll', function() {
       var newScrollY = window.scrollY;
@@ -375,6 +333,8 @@
       // On ajoute l'amplitude du scroll à l'énergie courante (avec plafond)
       scrollEnergy = Math.min(60, scrollEnergy + delta * 0.8);
       lastScrollY = newScrollY;
+      // Si la boucle s'est mise en veille (hors hero + zéro particule), on la réveille.
+      if (rafId === null) rafId = requestAnimationFrame(tick);
     }, { passive: true });
 
     function spawnSpark(x, y) {
@@ -508,9 +468,15 @@
         }
       }
 
-      requestAnimationFrame(tick);
+      // Mise en veille quand il n'y a plus rien à animer : hero hors-vue, aucune particule,
+      // énergie résiduelle négligeable. Le listener de scroll relance la boucle au besoin.
+      if (!emitterVisible && particles.length === 0 && scrollEnergy < 0.1) {
+        rafId = null;
+        return;
+      }
+      rafId = requestAnimationFrame(tick);
     }
-    tick();
+    rafId = requestAnimationFrame(tick);
   }
 
   // ========== LIGHTBOX ==========
@@ -539,22 +505,34 @@
       document.body.classList.remove('lightbox-open');
     }
 
-    function handleCardOpen(card) {
-      var imgEl = card.querySelector('[data-src]');
-      if (!imgEl) return;
-      var src = imgEl.getAttribute('data-src');
-      // Préférer le .webp si dispo, cohérent avec le lazy-loader
-      if (supportsWebp && /\.(jpe?g|png)$/i.test(src)) {
-        src = src.replace(/\.(jpe?g|png)$/i, '.webp');
+    function bestLightboxSrc(card) {
+      // On vise la variante 1600w (WebP par défaut, JPG en secours) parsée depuis le srcset.
+      var source = card.querySelector('picture source[type="image/webp"]');
+      var imgEl = card.querySelector('picture img');
+      if (source && source.srcset) {
+        var m = source.srcset.match(/([^\s,]+)\s+1600w/);
+        if (m) return m[1];
       }
+      if (imgEl && imgEl.srcset) {
+        var mj = imgEl.srcset.match(/([^\s,]+)\s+1600w/);
+        if (mj) return mj[1];
+      }
+      return imgEl ? (imgEl.currentSrc || imgEl.src) : null;
+    }
+
+    function handleCardOpen(card) {
+      var src = bestLightboxSrc(card);
+      if (!src) return;
+      var imgEl = card.querySelector('picture img');
       var titleEl = card.querySelector('h3, h4');
       var metaEl = card.querySelector('.specs, .info, .mat, .step');
       var title = titleEl ? titleEl.textContent.trim() : '';
       var meta = metaEl ? metaEl.textContent.replace(/\s+/g, ' ').trim() : '';
+      var alt = imgEl ? imgEl.getAttribute('alt') : title;
       var caption = title;
       if (title && meta) caption += ' — ' + meta;
       else if (meta) caption = meta;
-      openLightbox(src, caption, title);
+      openLightbox(src, caption, alt || title);
     }
 
     document.querySelectorAll('.h-card, .chem-piece, .mob-cell, .trio-cell, .atelier-cell, .galerie-cell').forEach(function(card) {
