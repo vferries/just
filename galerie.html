@@ -21,7 +21,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Inter+Tight:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;1,400&family=Inter+Tight:wght@300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <link rel="stylesheet" href="./styles.css" />
 <script src="./script.js" defer></script>
@@ -60,77 +60,132 @@
 
     <div class="galerie-grid">
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-01.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-01-640.webp 640w, ./photos/galerie-01-1024.webp 1024w, ./photos/galerie-01-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-01-1024.jpg" srcset="./photos/galerie-01-640.jpg 640w, ./photos/galerie-01-1024.jpg 1024w, ./photos/galerie-01-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Table «Occitane» — vue d'ensemble" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Table «&nbsp;Occitane&nbsp;»</h4>
           <span class="mat">Vue d'ensemble</span>
         </div>
       </div>
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-02.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-02-640.webp 640w, ./photos/galerie-02-1024.webp 1024w, ./photos/galerie-02-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-02-1024.jpg" srcset="./photos/galerie-02-640.jpg 640w, ./photos/galerie-02-1024.jpg 1024w, ./photos/galerie-02-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Table «Occitane» vue en contre-plongée" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Table «&nbsp;Occitane&nbsp;»</h4>
           <span class="mat">Contre-plongée</span>
         </div>
       </div>
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-03.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-03-640.webp 640w, ./photos/galerie-03-1024.webp 1024w, ./photos/galerie-03-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-03-1024.jpg" srcset="./photos/galerie-03-640.jpg 640w, ./photos/galerie-03-1024.jpg 1024w, ./photos/galerie-03-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Croix occitane en incrustation acier" width="1200" height="1600" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Croix occitane</h4>
           <span class="mat">Incrustation acier</span>
         </div>
       </div>
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-04.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-04-640.webp 640w, ./photos/galerie-04-1024.webp 1024w, ./photos/galerie-04-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-04-1024.jpg" srcset="./photos/galerie-04-640.jpg 640w, ./photos/galerie-04-1024.jpg 1024w, ./photos/galerie-04-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Assemblage d'un pied de table — vue dessous" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Assemblage pied</h4>
           <span class="mat">Vue dessous</span>
         </div>
       </div>
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-05.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-05-640.webp 640w, ./photos/galerie-05-1024.webp 1024w, ./photos/galerie-05-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-05-1024.jpg" srcset="./photos/galerie-05-640.jpg 640w, ./photos/galerie-05-1024.jpg 1024w, ./photos/galerie-05-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Table et cheminée intégrées au salon" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Table &amp; cheminée</h4>
           <span class="mat">Intégration salon</span>
         </div>
       </div>
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-06.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-06-640.webp 640w, ./photos/galerie-06-1024.webp 1024w, ./photos/galerie-06-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-06-1024.jpg" srcset="./photos/galerie-06-640.jpg 640w, ./photos/galerie-06-1024.jpg 1024w, ./photos/galerie-06-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Pied «Étoile» — structure nue" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Pied «&nbsp;Étoile&nbsp;»</h4>
           <span class="mat">Structure nue</span>
         </div>
       </div>
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-07.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-07-640.webp 640w, ./photos/galerie-07-1024.webp 1024w, ./photos/galerie-07-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-07-1024.jpg" srcset="./photos/galerie-07-640.jpg 640w, ./photos/galerie-07-1024.jpg 1024w, ./photos/galerie-07-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Escalier acier et verre en cours de chantier" width="1200" height="1600" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Escalier acier &amp; verre</h4>
           <span class="mat">Chantier</span>
         </div>
       </div>
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-08.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-08-640.webp 640w, ./photos/galerie-08-1024.webp 1024w, ./photos/galerie-08-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-08-1024.jpg" srcset="./photos/galerie-08-640.jpg 640w, ./photos/galerie-08-1024.jpg 1024w, ./photos/galerie-08-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Main courante acier avant peinture" width="1200" height="1600" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Main courante</h4>
           <span class="mat">Acier / Avant peinture</span>
         </div>
       </div>
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-09.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-09-640.webp 640w, ./photos/galerie-09-1024.webp 1024w, ./photos/galerie-09-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-09-1024.jpg" srcset="./photos/galerie-09-640.jpg 640w, ./photos/galerie-09-1024.jpg 1024w, ./photos/galerie-09-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Crémaillère d'escalier — vue de la volée" width="1200" height="1600" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Crémaillère</h4>
           <span class="mat">Vue de la volée</span>
         </div>
       </div>
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-10.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-10-640.webp 640w, ./photos/galerie-10-1024.webp 1024w, ./photos/galerie-10-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-10-1024.jpg" srcset="./photos/galerie-10-640.jpg 640w, ./photos/galerie-10-1024.jpg 1024w, ./photos/galerie-10-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Escalier suspendu vu en plongée" width="1600" height="1200" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Escalier suspendu</h4>
           <span class="mat">Vue plongée</span>
         </div>
       </div>
       <div class="galerie-cell reveal-image">
-        <div class="inner img-bg img-treat" data-src="./photos/galerie-11.jpg"></div>
+        <div class="inner img-bg">
+          <picture>
+            <source type="image/webp" srcset="./photos/galerie-11-640.webp 640w, ./photos/galerie-11-1024.webp 1024w, ./photos/galerie-11-1600.webp 1600w" sizes="(max-width: 900px) 100vw, 33vw" />
+            <img src="./photos/galerie-11-1024.jpg" srcset="./photos/galerie-11-640.jpg 640w, ./photos/galerie-11-1024.jpg 1024w, ./photos/galerie-11-1600.jpg 1600w" sizes="(max-width: 900px) 100vw, 33vw" alt="Limons à crémaillère en acier découpé, pré-montage atelier" width="1200" height="1600" loading="lazy" decoding="async" class="img-treat" />
+          </picture>
+        </div>
         <div class="galerie-info">
           <h4>Limons à crémaillère</h4>
           <span class="mat">Acier découpé / Pré-montage atelier</span>
