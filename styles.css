@@ -1499,6 +1499,52 @@
   }
 
 
+  /* ===== PAGE 404 — ÉTINCELLE SOLITAIRE (DESIGN.md §9) ===== */
+  .notfound {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2.5rem 6rem;
+  }
+  .notfound-spark {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--spark-white);
+    box-shadow: 0 0 16px 4px var(--spark), 0 0 70px 22px rgba(255, 122, 46, 0.22);
+    margin-bottom: 4.5rem;
+    animation: notfound-breathe 3.2s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+  }
+  @keyframes notfound-breathe {
+    0%, 100% { opacity: 1; box-shadow: 0 0 16px 4px var(--spark), 0 0 70px 22px rgba(255, 122, 46, 0.22); }
+    50%      { opacity: 0.55; box-shadow: 0 0 10px 2px var(--spark), 0 0 40px 12px rgba(255, 122, 46, 0.12); }
+  }
+  .notfound-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1.5rem;
+  }
+  .notfound h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+  .notfound h1 .italic { font-style: italic; color: var(--spark); }
+  .notfound p {
+    color: var(--ink-soft);
+    max-width: 34rem;
+    margin-bottom: 3rem;
+  }
+  .notfound .legal-back { margin-top: 0; }
+
   /* ===== ACCESSIBILITÉ — RÉDUCTION DE MOUVEMENT ===== */
   /* Placé en fin de feuille pour gagner la cascade à spécificité égale (pas de !important).
      Le canvas d'étincelles et le curseur custom ne sont pas démarrés côté JS (voir script.js). */
@@ -1520,4 +1566,5 @@
        geste de l'utilisateur, reste actif : ce n'est pas un mouvement autonome) */
     .marquee-track { animation: none; }
     .loader { display: none; }
+    .notfound-spark { animation: none; }
   }
