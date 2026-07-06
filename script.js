@@ -301,6 +301,9 @@
   // - Sa position X avance vers la droite au fur et à mesure du scroll
   // - L'émission ne se déclenche QUE pendant un scroll actif
   // - Les particules sortent du hero et retombent par gravité sur la section en dessous
+  // - Réalisme : refroidissement chromatique (blanc → jaune → orange → rouge sombre),
+  //   blending additif, éclatement en fourche à mi-vol (signature de l'acier au carbone),
+  //   rebonds amortis en bas du viewport, et saignée incandescente laissée par la torche
 
   var canvas = document.getElementById('sparks-canvas');
   if (canvas) {
@@ -327,6 +330,12 @@
     var scrollEnergy = 0;
     var rafId = null;
 
+    // --- Saignée de coupe : segments laissés par la torche, en coordonnées "progress" du hero
+    // (0..1 sur la largeur de coupe) pour rester stables quand le hero défile.
+    var kerf = [];
+    var lastKerfProgress = null;
+    var KERF_LIFE_MS = 2400;   // durée de refroidissement avant extinction complète
+
     window.addEventListener('scroll', function() {
       var newScrollY = window.scrollY;
       var delta = Math.abs(newScrollY - lastScrollY);
@@ -337,7 +346,11 @@
       if (rafId === null) rafId = requestAnimationFrame(tick);
     }, { passive: true });
 
+    // Plafond global : protège le CPU quand scroll rapide + éclatements + rebonds s'additionnent
+    var MAX_PARTICLES = 400;
+
     function spawnSpark(x, y) {
+      if (particles.length >= MAX_PARTICLES) return;
       // Projection vers la DROITE, légèrement vers le haut
       var baseAngle = -0.3;                          // ~ -17°
       var angle = baseAngle + (Math.random() - 0.5) * 0.95;
@@ -353,13 +366,44 @@
         life: life,
         maxLife: life,
         size: trail ? 0.9 + Math.random() * 1.4 : 1.8 + Math.random() * 2.5,
-        hue: 18 + Math.random() * 32,
-        sat: 90 + Math.random() * 10,
-        light: 68 + Math.random() * 28,
+        // La couleur est désormais dérivée de la chaleur (life/maxLife) au rendu ;
+        // hueShift garde une petite variation individuelle pour éviter l'uniformité
+        hueShift: (Math.random() - 0.5) * 10,
         trail: trail,
-        sparkle: Math.random() > 0.82
+        sparkle: Math.random() > 0.82,
+        bounces: 0,
+        // ~1 étincelle sur 4 éclate en fourche à mi-vol (fraction de vie restante)
+        burstAt: Math.random() > 0.75 ? 0.3 + Math.random() * 0.3 : 0
       });
     }
+
+    // Étincelle fille : issue d'un éclatement en vol ou d'un impact au sol.
+    // Plus petite, plus brève, et incapable d'éclater à son tour.
+    function spawnChild(parent, spread, speedScale) {
+      if (particles.length >= MAX_PARTICLES) return;
+      var angle = Math.atan2(parent.vy, parent.vx) + (Math.random() - 0.5) * spread;
+      var speed = Math.sqrt(parent.vx * parent.vx + parent.vy * parent.vy) * speedScale * (0.4 + Math.random() * 0.6);
+      var life = 15 + Math.random() * 30;
+
+      particles.push({
+        x: parent.x,
+        y: parent.y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: life,
+        maxLife: life,
+        size: Math.max(0.6, parent.size * (0.35 + Math.random() * 0.35)),
+        hueShift: (Math.random() - 0.5) * 10,
+        trail: Math.random() > 0.4,
+        sparkle: Math.random() > 0.7,
+        bounces: parent.bounces,
+        burstAt: 0
+      });
+    }
+
+    // Refroidissement chromatique : heat=1 → quasi blanc incandescent, heat=0 → rouge sombre
+    function sparkHue(p, heat) { return 12 + 43 * heat + p.hueShift; }
+    function sparkLight(heat) { return 42 + 53 * heat; }
 
     function tick() {
       // Toujours transparent (pas de voile noir résiduel)
@@ -389,15 +433,62 @@
         emitting = emitterVisible && scrollEnergy > 0.5;
       }
 
+      // Les particules vivent en coordonnées PAGE (pas viewport) : une fois émises,
+      // elles restent physiquement attachées à la découpe même si le hero défile.
+      // Sinon elles semblent traîner sous la ligne et balayer comme un arroseur.
+      var scrollYNow = window.scrollY;
+
       if (emitting) {
         // Plus on scrolle vite, plus ça crache
         var emitCount = Math.min(22, 2 + Math.floor(scrollEnergy * 0.5));
         for (var i = 0; i < emitCount; i++) {
           spawnSpark(
             emitterX + (Math.random() - 0.5) * 8,
-            emitterY + (Math.random() - 0.5) * 6
+            emitterY + scrollYNow + (Math.random() - 0.5) * 6
           );
         }
+        // La torche avance → elle laisse une saignée incandescente derrière elle
+        if (lastKerfProgress !== null && Math.abs(progress - lastKerfProgress) > 0.0008) {
+          kerf.push({ p0: lastKerfProgress, p1: progress, born: performance.now() });
+        }
+      }
+      // Suivi de la position même sans émission : évite un segment fantôme
+      // couvrant tout le trajet parcouru pendant une pause de scroll
+      lastKerfProgress = emitterVisible ? progress : null;
+
+      // Le blending additif fait s'additionner la lumière des éléments superposés :
+      // c'est ce qui donne l'aspect incandescent (au lieu de disques opaques)
+      ctx.globalCompositeOperation = 'lighter';
+
+      // --- Rendu de la saignée : chaque segment refroidit (blanc → orange → rouge → éteint)
+      var now = performance.now();
+      for (var k = kerf.length - 1; k >= 0; k--) {
+        var seg = kerf[k];
+        var age = (now - seg.born) / KERF_LIFE_MS;
+        if (age >= 1) { kerf.splice(k, 1); continue; }
+        if (!emitterVisible) continue;   // hors écran : on laisse vieillir sans dessiner
+
+        var cool = 1 - age;
+        var kx0 = W * 0.08 + seg.p0 * W * 0.78;
+        var kx1 = W * 0.08 + seg.p1 * W * 0.78;
+        var kHue = 10 + 40 * cool * cool;
+        var kLight = 38 + 55 * Math.pow(cool, 1.5);
+
+        // Halo diffus autour de la coupe, puis cœur fin
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = 'hsla(' + kHue + ', 100%, ' + kLight + '%, ' + (0.22 * cool) + ')';
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(kx0, emitterY);
+        ctx.lineTo(kx1, emitterY);
+        ctx.stroke();
+
+        ctx.strokeStyle = 'hsla(' + kHue + ', 100%, ' + Math.min(96, kLight + 18) + '%, ' + (0.85 * Math.pow(cool, 1.2)) + ')';
+        ctx.lineWidth = 1.6;
+        ctx.beginPath();
+        ctx.moveTo(kx0, emitterY);
+        ctx.lineTo(kx1, emitterY);
+        ctx.stroke();
       }
 
       // Halo lumineux au point de contact — visible tant qu'il y a de l'énergie
@@ -432,45 +523,103 @@
         p.vy *= 0.996;
         p.life--;
 
+        var heat = Math.max(0, p.life / p.maxLife);
+
+        // Éclatement en fourche : la mère explose en 2-4 étincelles filles puis disparaît.
+        // C'est la signature visuelle des étincelles d'acier au carbone.
+        if (p.burstAt && heat < p.burstAt) {
+          var burstN = 2 + Math.floor(Math.random() * 3);
+          for (var b = 0; b < burstN; b++) spawnChild(p, 1.4, 0.8);
+          particles.splice(i, 1);
+          continue;
+        }
+
+        // Position à l'écran : coordonnées page → viewport
+        var sy = p.y - scrollYNow;
+
+        // Rebond amorti sur le bas du viewport, avec micro-gerbe à l'impact
+        if (sy > H - 4 && p.vy > 0) {
+          if (p.bounces >= 2 || p.vy < 2.5) {
+            particles.splice(i, 1);
+            continue;
+          }
+          if (p.vy > 6) {
+            var chipN = 1 + Math.floor(Math.random() * 2);
+            for (var c = 0; c < chipN; c++) spawnChild(p, 2.2, 0.4);
+          }
+          p.y = scrollYNow + H - 4;
+          sy = H - 4;
+          p.vy = -p.vy * (0.28 + Math.random() * 0.18);
+          p.vx *= 0.7;
+          p.bounces++;
+          // Une étincelle qui a touché le sol s'éteint vite
+          p.life = Math.min(p.life, 20 + Math.random() * 20);
+        }
+
+        // Rebond sur le bord droit de l'écran (même amortissement, même extinction)
+        if (p.x > W - 4 && p.vx > 0) {
+          if (p.bounces >= 2) {
+            particles.splice(i, 1);
+            continue;
+          }
+          if (p.vx > 6) {
+            var chipN2 = 1 + Math.floor(Math.random() * 2);
+            for (var c2 = 0; c2 < chipN2; c2++) spawnChild(p, 2.2, 0.4);
+          }
+          p.x = W - 4;
+          p.vx = -p.vx * (0.28 + Math.random() * 0.18);
+          p.vy *= 0.7;
+          p.bounces++;
+          p.life = Math.min(p.life, 20 + Math.random() * 20);
+        }
+
         var sparkMod = p.sparkle ? (0.55 + Math.random() * 0.45) : 1;
-        var alpha = Math.max(0, p.life / p.maxLife) * sparkMod;
+        var alpha = heat * sparkMod;
         var size = Math.max(0.5, p.size * Math.max(0.3, alpha));
+        var hue = sparkHue(p, heat);
+        var light = sparkLight(heat);
 
         if (p.trail) {
-          ctx.strokeStyle = 'hsla(' + p.hue + ', ' + p.sat + '%, ' + p.light + '%, ' + alpha + ')';
+          ctx.strokeStyle = 'hsla(' + hue + ', 100%, ' + light + '%, ' + alpha + ')';
           ctx.lineWidth = Math.max(0.8, size * 0.95);
           ctx.lineCap = 'round';
           ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(p.x - p.vx * 2.4, p.y - p.vy * 2.4);
+          ctx.moveTo(p.x, sy);
+          ctx.lineTo(p.x - p.vx * 2.4, sy - p.vy * 2.4);
           ctx.stroke();
         } else {
           var haloRadius = Math.max(2, size * 5);
           try {
-            var grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, haloRadius);
-            grad.addColorStop(0, 'hsla(' + p.hue + ', ' + p.sat + '%, ' + p.light + '%, ' + alpha + ')');
-            grad.addColorStop(0.3, 'hsla(' + p.hue + ', 95%, 55%, ' + (alpha * 0.45) + ')');
-            grad.addColorStop(1, 'hsla(' + p.hue + ', 100%, 30%, 0)');
+            var grad = ctx.createRadialGradient(p.x, sy, 0, p.x, sy, haloRadius);
+            grad.addColorStop(0, 'hsla(' + hue + ', 100%, ' + light + '%, ' + alpha + ')');
+            grad.addColorStop(0.3, 'hsla(' + hue + ', 95%, ' + Math.max(30, light - 20) + '%, ' + (alpha * 0.35) + ')');
+            grad.addColorStop(1, 'hsla(' + hue + ', 100%, 30%, 0)');
             ctx.fillStyle = grad;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, haloRadius, 0, Math.PI * 2);
+            ctx.arc(p.x, sy, haloRadius, 0, Math.PI * 2);
             ctx.fill();
           } catch (e) {}
 
-          ctx.fillStyle = 'hsla(' + p.hue + ', 100%, 95%, ' + alpha + ')';
+          // Cœur : blanc chaud à la naissance, s'assombrit en refroidissant
+          ctx.fillStyle = 'hsla(' + hue + ', 100%, ' + Math.min(95, light + 25) + '%, ' + alpha + ')';
           ctx.beginPath();
-          ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+          ctx.arc(p.x, sy, size, 0, Math.PI * 2);
           ctx.fill();
         }
 
-        if (p.life <= 0 || p.y > H + 100 || p.x > W + 120 || p.x < -120) {
+        // sy hors viewport (bas ou haut, après un scroll) ou vie épuisée → recyclage
+        if (p.life <= 0 || sy > H + 100 || sy < -150 || p.x < -120) {
           particles.splice(i, 1);
         }
       }
 
+      // Retour au mode normal : le clearRect du prochain frame et tout autre rendu
+      // ne doivent pas hériter du blending additif
+      ctx.globalCompositeOperation = 'source-over';
+
       // Mise en veille quand il n'y a plus rien à animer : hero hors-vue, aucune particule,
-      // énergie résiduelle négligeable. Le listener de scroll relance la boucle au besoin.
-      if (!emitterVisible && particles.length === 0 && scrollEnergy < 0.1) {
+      // saignée éteinte, énergie résiduelle négligeable. Le scroll relance la boucle au besoin.
+      if (!emitterVisible && particles.length === 0 && kerf.length === 0 && scrollEnergy < 0.1) {
         rafId = null;
         return;
       }

@@ -119,6 +119,12 @@ C'est la signature visuelle du site. À traiter avec précaution.
 - L'émission est **pilotée par la vitesse de scroll**, pas en continu. Tant qu'on ne scrolle pas, rien ne sort.
 - Les particules partent **vers la droite, légèrement vers le haut** (~-17°), puis retombent en arc sous la gravité.
 - Mix de **points incandescents** (halo radial cuivre) et de **traînées filantes** (lignes courtes).
+- **Refroidissement chromatique** : la couleur est dérivée de `life/maxLife` — quasi blanc incandescent à la naissance, rouge sombre à l'extinction. Ne pas re-figer la couleur par particule.
+- **Blending additif** (`globalCompositeOperation = 'lighter'`) pendant le rendu des étincelles : les superpositions s'additionnent en lumière. Remis à `source-over` en fin de frame.
+- **Éclatement en fourche** : ~1 étincelle sur 4 explose à mi-vol en 2-4 étincelles filles (signature de l'acier au carbone). Les filles n'éclatent jamais à leur tour.
+- **Coordonnées page** : les particules vivent en coordonnées page (pas viewport) — une fois émises, elles restent attachées à la découpe pendant le scroll. Ne pas revenir au viewport : ça fait « traîner » les étincelles sous la ligne pendant le scroll (effet arroseur).
+- **Rebonds amortis** en bas du viewport et sur le bord droit (2 max, extinction rapide après impact), avec micro-gerbe sur les impacts rapides.
+- **Saignée de coupe** : la torche laisse derrière elle une ligne incandescente qui refroidit en ~2,4 s (blanc → orange → rouge → éteint). Stockée en coordonnées relatives au hero pour rester stable au scroll.
 
 **Ne pas toucher sauf compréhension complète :**
 - Le `ctx.clearRect()` à chaque frame est **obligatoire** — sinon voile noir résiduel qui couvre les sections.
