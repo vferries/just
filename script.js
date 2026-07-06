@@ -219,8 +219,10 @@
   var cursor = document.getElementById('cursor');
   var ring = document.getElementById('cursorRing');
   var hasFinePointer = window.matchMedia('(pointer: fine)').matches;
+  // Réduction de mouvement demandée par l'OS : pas de curseur custom ni d'étincelles
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (cursor && ring && hasFinePointer) {
+  if (cursor && ring && hasFinePointer && !prefersReducedMotion) {
     var mx = 0, my = 0, rx = 0, ry = 0;
     document.addEventListener('mousemove', function(e) {
       mx = e.clientX; my = e.clientY;
@@ -306,7 +308,7 @@
   //   rebonds amortis en bas du viewport, et saignée incandescente laissée par la torche
 
   var canvas = document.getElementById('sparks-canvas');
-  if (canvas) {
+  if (canvas && !prefersReducedMotion) {
     var ctx = canvas.getContext('2d');
     var particles = [];
     // Cap du DPR à 2 pour que les canvases retina 3x des mobiles ne saturent pas la mémoire GPU.

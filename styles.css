@@ -1498,3 +1498,26 @@
     .lightbox-caption { bottom: 1rem; left: 1rem; right: 1rem; font-size: 0.6rem; }
   }
 
+
+  /* ===== ACCESSIBILITÉ — RÉDUCTION DE MOUVEMENT ===== */
+  /* Placé en fin de feuille pour gagner la cascade à spécificité égale (pas de !important).
+     Le canvas d'étincelles et le curseur custom ne sont pas démarrés côté JS (voir script.js). */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    #sparks-canvas, .cursor, .cursor-ring { display: none; }
+
+    /* Contenu visible d'emblée : aucun reveal ne doit conditionner la lecture au mouvement */
+    .reveal, .reveal-stagger > *, .reveal-words .word > span {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .reveal-image .inner { transform: none; transition: none; }
+    .reveal-mask::after, .reveal-image::before { display: none; }
+
+    /* Animations autonomes stoppées (le scroll horizontal, piloté 1:1 par le
+       geste de l'utilisateur, reste actif : ce n'est pas un mouvement autonome) */
+    .marquee-track { animation: none; }
+    .loader { display: none; }
+  }
