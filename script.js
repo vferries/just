@@ -580,12 +580,15 @@
         var light = sparkLight(heat);
 
         if (p.trail) {
+          // La traînée ne doit jamais dépasser la distance réellement parcourue,
+          // sinon elle déborde derrière le point d'émission (traits sous la ligne de coupe)
+          var tailScale = Math.min(2.4, (p.maxLife - p.life) * 0.8);
           ctx.strokeStyle = 'hsla(' + hue + ', 100%, ' + light + '%, ' + alpha + ')';
           ctx.lineWidth = Math.max(0.8, size * 0.95);
           ctx.lineCap = 'round';
           ctx.beginPath();
           ctx.moveTo(p.x, sy);
-          ctx.lineTo(p.x - p.vx * 2.4, sy - p.vy * 2.4);
+          ctx.lineTo(p.x - p.vx * tailScale, sy - p.vy * tailScale);
           ctx.stroke();
         } else {
           var haloRadius = Math.max(2, size * 5);
