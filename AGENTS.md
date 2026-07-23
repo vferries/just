@@ -131,6 +131,7 @@ Pipeline non-destructif : les fichiers restent neutres, le rendu éditorial (gra
 - `atelier-02`, `atelier-03`, `atelier-05` (section 05, index.html — tréteaux, main courante, bande basse)
 - `galerie-01` à `galerie-11` (galerie.html — détails et vues complémentaires)
 - `mobilier-04` (source seule, non référencée — sert de base à `og-image.jpg`)
+- `hero-texture` (fond du hero, index.html — texture acier patiné sous le voile noir `.hero-bg`)
 
 ---
 
