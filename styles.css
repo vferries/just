@@ -396,10 +396,10 @@
     to   { opacity: 1; top: 0; }
   }
 
-  /* « Du fer au verre » : verre fondu révélé à travers les lettres, figé au scroll.
-     Le fond n'est réellement fixe qu'au repos (transform: none — cf. title-rise ci-dessus) ;
-     iOS Safari ignore background-attachment: fixed → dégradation propre (verre par lettre).
-     background-color = secours lisible si l'image ne charge pas (elle aussi clippée au texte). */
+  /* « Du fer au verre » : verre fondu révélé à travers les lettres.
+     Fond figé au scroll (background-attachment: fixed) activé seulement hors Firefox — voir la
+     règle html.bg-fixed-ok plus bas. iOS Safari & Firefox retombent proprement sur `scroll`
+     (verre par lettre, statique). background-color = secours lisible si l'image ne charge pas. */
   @supports ((-webkit-background-clip: text) or (background-clip: text)) {
     .hero-title .word > span {
       --titre-verre: image-set(
@@ -410,12 +410,16 @@
       background-image: var(--titre-verre);
       background-position: center;
       background-size: cover;
-      background-attachment: fixed;
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       color: transparent;
     }
+    /* Fond figé au scroll UNIQUEMENT hors Firefox (classe .bg-fixed-ok posée par le JS) :
+       background-attachment: fixed + background-clip: text a un rendu buggé sous Firefox.
+       Sans la classe (Firefox, ou avant JS), le fond reste en `scroll` (verre par lettre, statique). */
+    html.bg-fixed-ok .hero-title .word > span { background-attachment: fixed; }
+
     /* Variante allégée sur mobile */
     @media (max-width: 900px) {
       .hero-title .word > span {

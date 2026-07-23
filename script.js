@@ -1,6 +1,14 @@
 (function() {
   'use strict';
 
+  // ========== FOND FIGÉ DU TITRE (hors Firefox) ==========
+  // background-attachment: fixed + background-clip: text a un rendu buggé sous Firefox.
+  // On n'active `fixed` (via .bg-fixed-ok, cf. CSS) que sur les autres navigateurs ;
+  // Firefox garde le verre en `scroll` (statique, par lettre) mais sans bug.
+  if (!/firefox/i.test(navigator.userAgent || '')) {
+    document.documentElement.classList.add('bg-fixed-ok');
+  }
+
   // ========== LOADER ==========
   function dismissLoader() {
     var loader = document.getElementById('loader');
