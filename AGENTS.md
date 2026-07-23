@@ -132,7 +132,6 @@ Pipeline non-destructif : les fichiers restent neutres, le rendu éditorial (gra
 - `galerie-01` à `galerie-11` (galerie.html — détails et vues complémentaires)
 - `mobilier-04` (source seule, non référencée — sert de base à `og-image.jpg`)
 - `hero-texture` (fond du hero, index.html — texture acier patiné sous le voile noir `.hero-bg`)
-- `titre-verre` (fond du titre « Du fer au verre » via `background-clip: text`, styles.css — verre fondu figé au scroll)
 
 ---
 
