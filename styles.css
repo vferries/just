@@ -1560,8 +1560,16 @@
     outline: 1px solid var(--spark);
     outline-offset: 4px;
   }
-  /* Quand la lightbox est ouverte, on bloque le scroll du document sous-jacent */
-  body.lightbox-open { overflow: hidden; }
+  /* Verrou de scroll mobile-safe (lightbox + menu burger) : le body est figé en position
+     fixe par le JS (lockScroll), la position `top` étant posée en inline. overflow:hidden
+     seul ne bloque pas le scroll tactile sur iOS/Chrome mobile. */
+  body.scroll-locked {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
+    overflow: hidden;
+  }
 
   @media (max-width: 700px) {
     .lightbox { padding: 5rem 1rem 4rem; }

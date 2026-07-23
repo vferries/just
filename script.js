@@ -633,6 +633,27 @@
     rafId = requestAnimationFrame(tick);
   }
 
+  // ========== VERROU DE SCROLL (mobile-safe) ==========
+  // overflow:hidden sur le body ne bloque PAS le scroll tactile sur iOS/Chrome mobile.
+  // On fige le body en position: fixed (classe .scroll-locked) en mémorisant la position,
+  // puis on la restaure à la fermeture. Utilisé par la lightbox ET le menu burger.
+  var scrollLockY = 0;
+  var scrollLocked = false;
+  function lockScroll() {
+    if (scrollLocked) return;
+    scrollLocked = true;
+    scrollLockY = window.pageYOffset || document.documentElement.scrollTop || 0;
+    document.body.style.top = (-scrollLockY) + 'px';
+    document.body.classList.add('scroll-locked');
+  }
+  function unlockScroll() {
+    if (!scrollLocked) return;
+    scrollLocked = false;
+    document.body.classList.remove('scroll-locked');
+    document.body.style.top = '';
+    window.scrollTo(0, scrollLockY);
+  }
+
   // ========== LIGHTBOX ==========
   // Clic sur une carte image (escalier / cheminée / pièce de ferronnerie) → ouverture plein écran
   // sans filtre img-treat (on voit la vraie photo). ESC ou clic sur l'arrière-plan pour fermer.
@@ -649,14 +670,14 @@
       if (lbCaption) lbCaption.textContent = caption || '';
       lb.classList.add('open');
       lb.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('lightbox-open');
+      lockScroll();
       if (lbClose) lbClose.focus();
     }
 
     function closeLightbox() {
       lb.classList.remove('open');
       lb.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('lightbox-open');
+      unlockScroll();
     }
 
     function bestLightboxSrc(card) {
@@ -781,7 +802,7 @@
       navEl.classList.toggle('menu-open', open);
       navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
       navToggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
-      document.body.style.overflow = open ? 'hidden' : '';
+      if (open) lockScroll(); else unlockScroll();
     };
     navToggle.addEventListener('click', function() {
       setMenu(!navEl.classList.contains('menu-open'));
