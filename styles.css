@@ -377,13 +377,53 @@
   }
   .hero-title .word > span {
     display: inline-block;
-    opacity: 0;
-    transform: translateY(40%);
-    animation: title-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    /* Décalage d'entrée via `top` (position: relative) et NON `transform` :
+       un transform — même un translateY(0) résiduel — rend background-attachment: fixed
+       relatif à la lettre, donc `cover` remplit la boîte de la lettre = fond ultra-zoomé
+       pendant l'animation. Avec `top`, le fond reste figé au viewport tout du long. */
+    position: relative;
+    /* L'italique Bodoni penche : le haut du « f » déborde à droite, la descendante à gauche,
+       et les jambages dépassent en haut/bas. background-clip: text ne peint le fond que dans
+       la boîte de la lettre → on l'élargit sur les 4 côtés (padding), compensé par une margin
+       négative égale pour ne changer ni l'espacement des lettres ni celui des lignes. */
+    padding: 0.85em;
+    margin: -0.85em;
+    animation: title-rise 1.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
     animation-delay: calc(var(--i) * 0.15s + 1.6s);
   }
   @keyframes title-rise {
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; top: 0.35em; }
+    to   { opacity: 1; top: 0; }
+  }
+
+  /* « Du fer au verre » : verre fondu révélé à travers les lettres, figé au scroll.
+     Le fond n'est réellement fixe qu'au repos (transform: none — cf. title-rise ci-dessus) ;
+     iOS Safari ignore background-attachment: fixed → dégradation propre (verre par lettre).
+     background-color = secours lisible si l'image ne charge pas (elle aussi clippée au texte). */
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .hero-title .word > span {
+      --titre-verre: image-set(
+        url("./photos/titre-verre-1600.webp") type("image/webp"),
+        url("./photos/titre-verre-1600.jpg") type("image/jpeg"));
+      background-color: #e8e2d6;
+      background-image: url("./photos/titre-verre-1600.jpg"); /* secours si image-set non géré */
+      background-image: var(--titre-verre);
+      background-position: center;
+      background-size: cover;
+      background-attachment: fixed;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    /* Variante allégée sur mobile */
+    @media (max-width: 900px) {
+      .hero-title .word > span {
+        --titre-verre: image-set(
+          url("./photos/titre-verre-1024.webp") type("image/webp"),
+          url("./photos/titre-verre-1024.jpg") type("image/jpeg"));
+      }
+    }
   }
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(20px); }
@@ -1644,6 +1684,8 @@
     /* Animations autonomes stoppées (le scroll horizontal, piloté 1:1 par le
        geste de l'utilisateur, reste actif : ce n'est pas un mouvement autonome) */
     .marquee-track { animation: none; }
+    /* Titre visible d'emblée ; l'état de base (transform: none) préserve le fond fixe du verre */
+    .hero-title .word > span { animation: none; }
     /* Menu mobile : ouverture/fermeture instantanée */
     .nav-links, .nav-toggle-bar { transition: none; }
     .loader { display: none; }
