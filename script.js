@@ -772,4 +772,32 @@
     });
   }
 
+  // ========== MENU MOBILE (burger) ==========
+  var navEl = document.getElementById('nav');
+  var navToggle = document.getElementById('navToggle');
+  var navMenu = document.getElementById('navMenu');
+  if (navEl && navToggle && navMenu) {
+    var setMenu = function(open) {
+      navEl.classList.toggle('menu-open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      navToggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    navToggle.addEventListener('click', function() {
+      setMenu(!navEl.classList.contains('menu-open'));
+    });
+    // Fermeture au clic sur un lien du menu
+    navMenu.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') setMenu(false);
+    });
+    // Fermeture avec Échap
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && navEl.classList.contains('menu-open')) setMenu(false);
+    });
+    // Garde-fou : repasser en desktop referme le menu (sinon overflow:hidden reste bloqué)
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 720 && navEl.classList.contains('menu-open')) setMenu(false);
+    }, { passive: true });
+  }
+
 })();

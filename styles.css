@@ -250,9 +250,61 @@
     transition: width 0.5s cubic-bezier(0.76, 0, 0.24, 1);
   }
   .nav-links a:hover::after { width: 100%; }
+
+  /* Bouton burger — masqué en desktop, révélé sous 720px */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+  }
+  .nav-toggle:focus-visible { outline: 1px solid var(--spark); outline-offset: 4px; }
+  .nav-toggle-bar {
+    display: block;
+    width: 26px;
+    height: 1.5px;
+    margin: 0 auto;
+    background: currentColor;
+    transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.3s ease;
+  }
+
   @media (max-width: 720px) {
     nav { padding: 1.2rem 1.2rem; }
-    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+
+    /* Menu plein écran révélé par le burger */
+    .nav-links {
+      position: fixed;
+      inset: 0;
+      z-index: -1;                /* derrière le logo et le burger, qui restent cliquables */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2.2rem;
+      background: var(--bg-1);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+    }
+    .nav-links a { font-size: 1rem; letter-spacing: 0.28em; padding: 0.4rem 0; }
+
+    /* Ouvert : le blend « difference » de la nav est neutralisé pour lire sur le panneau opaque */
+    nav.menu-open { mix-blend-mode: normal; }
+    nav.menu-open .nav-links {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+    nav.menu-open .nav-toggle-bar:nth-child(1) { transform: translateY(3.75px) rotate(45deg); }
+    nav.menu-open .nav-toggle-bar:nth-child(2) { transform: translateY(-3.75px) rotate(-45deg); }
   }
 
   /* ========== HERO ========== */
@@ -1626,6 +1678,8 @@
     .marquee-track { animation: none; }
     /* Titre visible d'emblée ; l'état de base (transform: none) préserve le fond fixe du verre */
     .hero-title .word > span { animation: none; }
+    /* Menu mobile : ouverture/fermeture instantanée */
+    .nav-links, .nav-toggle-bar { transition: none; }
     .loader { display: none; }
     .notfound-spark { animation: none; }
   }
