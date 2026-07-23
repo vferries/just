@@ -124,7 +124,7 @@ Pipeline non-destructif : les fichiers restent neutres, le rendu éditorial (gra
 6. Idempotent : le script saute les fichiers dont les sorties sont plus récentes que la source
 
 **Slots actuellement référencés** :
-- `escalier-01` à `escalier-04` (section 01, index.html)
+- `escalier-01`, `escalier-05`, `escalier-04`, `escalier-09` (section 01, index.html — carrousel horizontal)
 - `cheminee-01` (section 02, index.html — cheminée «&nbsp;Goutte&nbsp;», foyer ouvert)
 - `mobilier-01` à `mobilier-03` (section 03, index.html — trio : table Occitane, console, pied étoile)
 - `verriere-01` à `verriere-03`, `porte-01`, `porte-02`, `linteau-01` (section 04, index.html)
