@@ -125,7 +125,7 @@ Pipeline non-destructif : les fichiers restent neutres, le rendu éditorial (gra
 
 **Slots actuellement référencés** :
 - `escalier-01` à `escalier-04` (section 01, index.html)
-- `cheminee-01` à `cheminee-02` (section 02, index.html — 2 vues de la cheminée «&nbsp;Goutte&nbsp;»)
+- `cheminee-01` (section 02, index.html — cheminée «&nbsp;Goutte&nbsp;», foyer ouvert)
 - `mobilier-01` à `mobilier-03` (section 03, index.html — trio : table Occitane, console, pied étoile)
 - `verriere-01` à `verriere-03`, `porte-01`, `porte-02`, `linteau-01` (section 04, index.html)
 - `atelier-01` à `atelier-05` (section 05, index.html)
