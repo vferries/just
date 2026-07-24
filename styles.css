@@ -106,7 +106,7 @@
     background: var(--spark);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 10000;
+    z-index: 10010; /* au-dessus de la lightbox (10005) pour rester visible par-dessus */
     mix-blend-mode: difference;
     transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
     will-change: transform;
@@ -118,7 +118,7 @@
     border: 1px solid var(--spark);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 10009; /* au-dessus de la lightbox (10005), juste sous le point du curseur */
     transition: width 0.4s cubic-bezier(0.16,1,0.3,1), height 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
     opacity: 0.4;
     will-change: transform;
@@ -1594,18 +1594,25 @@
     justify-content: center;
     width: 54px;
     height: 54px;
-    padding: 0 0 0.35rem;
+    padding: 0;
     background: transparent;
     border: 1px solid var(--line-bright);
     border-radius: 50%;
     color: var(--ink);
-    font-family: var(--display);
-    font-size: 2rem;
-    line-height: 1;
+    font-size: 0; /* masque le glyphe ‹ › ; le chevron est dessiné en CSS pour un centrage fiable */
     cursor: pointer;
     transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease;
     z-index: 2;
   }
+  .lightbox-nav::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-top: 1.5px solid currentColor;
+    border-right: 1.5px solid currentColor;
+  }
+  .lightbox-prev::before { transform: rotate(-135deg); margin-left: 3px; }
+  .lightbox-next::before { transform: rotate(45deg); margin-right: 3px; }
   .lightbox-nav:hover,
   .lightbox-nav:focus-visible {
     border-color: var(--spark);
