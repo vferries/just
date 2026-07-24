@@ -663,30 +663,21 @@
   }
 
   // ========== LIGHTBOX ==========
-  // Clic sur une carte image (escalier / cheminée / pièce de ferronnerie) → ouverture plein écran
-  // sans filtre img-treat (on voit la vraie photo). ESC ou clic sur l'arrière-plan pour fermer.
+  // Clic sur une carte image → ouverture plein écran (vraie photo, sans filtre img-treat).
+  // Navigation en boucle sur TOUTES les images ouvrables de la page (ordre du DOM) :
+  // boutons ‹ ›, flèches clavier ←/→, swipe tactile. ESC ou clic sur le fond pour fermer.
   var lb = document.getElementById('lightbox');
   if (lb) {
     var lbImg = document.getElementById('lightboxImg');
     var lbCaption = document.getElementById('lightboxCaption');
     var lbClose = lb.querySelector('.lightbox-close');
-
-    function openLightbox(src, caption, alt) {
-      if (!lbImg) return;
-      lbImg.src = src;
-      lbImg.alt = alt || '';
-      if (lbCaption) lbCaption.textContent = caption || '';
-      lb.classList.add('open');
-      lb.setAttribute('aria-hidden', 'false');
-      lockScroll();
-      if (lbClose) lbClose.focus();
-    }
-
-    function closeLightbox() {
-      lb.classList.remove('open');
-      lb.setAttribute('aria-hidden', 'true');
-      unlockScroll();
-    }
+    var lbPrev = lb.querySelector('.lightbox-prev');
+    var lbNext = lb.querySelector('.lightbox-next');
+    var cards = Array.prototype.slice.call(
+      document.querySelectorAll('.h-card, .chem-piece, .mob-cell, .trio-cell, .atelier-cell, .galerie-cell')
+    );
+    var multi = cards.length > 1;
+    var current = -1;
 
     function bestLightboxSrc(card) {
       // On vise la variante 1600w (WebP par défaut, JPG en secours) parsée depuis le srcset.
@@ -703,41 +694,102 @@
       return imgEl ? (imgEl.currentSrc || imgEl.src) : null;
     }
 
-    function handleCardOpen(card) {
-      var src = bestLightboxSrc(card);
-      if (!src) return;
+    function cardData(card) {
       var imgEl = card.querySelector('picture img');
       var titleEl = card.querySelector('h3, h4');
       var metaEl = card.querySelector('.specs, .info, .mat, .step');
       var title = titleEl ? titleEl.textContent.trim() : '';
       var meta = metaEl ? metaEl.textContent.replace(/\s+/g, ' ').trim() : '';
-      var alt = imgEl ? imgEl.getAttribute('alt') : title;
       var caption = title;
       if (title && meta) caption += ' — ' + meta;
       else if (meta) caption = meta;
-      openLightbox(src, caption, alt || title);
+      return { src: bestLightboxSrc(card), caption: caption, alt: (imgEl ? imgEl.getAttribute('alt') : '') || title };
     }
 
-    document.querySelectorAll('.h-card, .chem-piece, .mob-cell, .trio-cell, .atelier-cell, .galerie-cell').forEach(function(card) {
+    // Précharge une image voisine pour un défilement fluide.
+    function preload(index) {
+      var card = cards[(index % cards.length + cards.length) % cards.length];
+      if (!card) return;
+      var src = bestLightboxSrc(card);
+      if (src) { var im = new Image(); im.src = src; }
+    }
+
+    function showAt(index) {
+      if (!cards.length || !lbImg) return;
+      current = (index % cards.length + cards.length) % cards.length; // bouclage
+      var d = cardData(cards[current]);
+      if (!d.src) return;
+      lbImg.src = d.src;
+      lbImg.alt = d.alt || '';
+      if (lbCaption) lbCaption.textContent = d.caption || '';
+      if (multi) { preload(current + 1); preload(current - 1); }
+    }
+
+    function openAt(index) {
+      showAt(index);
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      lockScroll();
+      if (lbClose) lbClose.focus();
+    }
+
+    function closeLightbox() {
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      unlockScroll();
+    }
+
+    function prev() { showAt(current - 1); }
+    function next() { showAt(current + 1); }
+
+    cards.forEach(function(card, i) {
       card.setAttribute('role', 'button');
       card.setAttribute('tabindex', '0');
-      card.addEventListener('click', function() { handleCardOpen(card); });
+      card.addEventListener('click', function() { openAt(i); });
       card.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          handleCardOpen(card);
+          openAt(i);
         }
       });
     });
 
     if (lbClose) lbClose.addEventListener('click', closeLightbox);
+    if (lbPrev) lbPrev.addEventListener('click', function(e) { e.stopPropagation(); prev(); });
+    if (lbNext) lbNext.addEventListener('click', function(e) { e.stopPropagation(); next(); });
+    // Une seule image : pas de navigation
+    if (!multi) {
+      if (lbPrev) lbPrev.style.display = 'none';
+      if (lbNext) lbNext.style.display = 'none';
+    }
+
     lb.addEventListener('click', function(e) {
-      // Fermer uniquement si le clic est sur le backdrop, pas sur l'image ou le bouton
+      // Fermer uniquement si le clic est sur le backdrop, pas sur l'image ou un bouton
       if (e.target === lb) closeLightbox();
     });
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox();
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (multi && e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+      else if (multi && e.key === 'ArrowRight') { e.preventDefault(); next(); }
     });
+
+    // Swipe tactile horizontal (le scroll du body est verrouillé pendant l'ouverture)
+    var swX = 0, swY = 0, swipeOn = false;
+    lb.addEventListener('touchstart', function(e) {
+      if (e.touches.length !== 1) { swipeOn = false; return; }
+      swX = e.touches[0].clientX; swY = e.touches[0].clientY; swipeOn = true;
+    }, { passive: true });
+    lb.addEventListener('touchend', function(e) {
+      if (!swipeOn) return;
+      swipeOn = false;
+      var t = e.changedTouches[0];
+      var dx = t.clientX - swX, dy = t.clientY - swY;
+      // Geste franchement horizontal uniquement
+      if (multi && Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        if (dx < 0) next(); else prev();
+      }
+    }, { passive: true });
   }
 
   // ========== FORMULAIRE DE CONTACT ==========
