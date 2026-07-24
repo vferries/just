@@ -29,7 +29,8 @@ jobs:
         # photos, workflow CI) reste dans le repo mais n'est pas exposé en ligne.
         run: |
           mkdir -p _site/photos
-          cp index.html mentions.html galerie.html 404.html styles.css script.js og-image.jpg apple-touch-icon.png robots.txt sitemap.xml _site/
+          # CNAME : conserve le domaine personnalisé (justbordas.fr) à chaque déploiement.
+          cp index.html mentions.html galerie.html 404.html styles.css script.js og-image.jpg apple-touch-icon.png robots.txt sitemap.xml CNAME _site/
           cp photos/*.jpg photos/*.webp _site/photos/
           # Sanity check : on s'assure que rien d'indésirable n'a fuité
           echo "Fichiers publiés :"
