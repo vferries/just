@@ -1657,7 +1657,7 @@
     .lightbox { padding: 5rem 1rem 4rem; }
     .lightbox-close { top: 1rem; right: 1rem; }
     .lightbox-caption { bottom: 1rem; left: 1rem; right: 1rem; font-size: 0.6rem; }
-    .lightbox-nav { width: 44px; height: 44px; font-size: 1.6rem; }
+    .lightbox-nav { width: 44px; height: 44px; }
     .lightbox-prev { left: 0.6rem; }
     .lightbox-next { right: 0.6rem; }
   }
