@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vferries.github.io/just/sitemap.xml
+Sitemap: https://justbordas.fr/sitemap.xml
