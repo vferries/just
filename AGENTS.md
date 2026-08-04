@@ -167,7 +167,7 @@ Les informations de l'atelier (nom, adresse, téléphone, email, SIRET, URL) son
 | **Raison sociale** | Monsieur Just Bordas | `mentions.html` (bloc Éditeur) uniquement |
 | **URL canonique** | `https://vferries.github.io/just/` | `index.html` (canonical, og:url, og:image, twitter:image), `galerie.html` (canonical, og:url, og:image), `sitemap.xml` (3 `<loc>`), `robots.txt` (Sitemap:), `AGENTS.md` (§6, §7), `.github/workflows/deploy.yml` (rien à changer, le déploiement utilise `github.github.io/<repo>/` automatiquement) |
 | **Téléphone** | 06 60 14 86 49 / `tel:+33660148649` | `index.html` (contact-grid), `mentions.html` (bloc Contact) |
-| **Email** | just.bordas@gmail.com | `index.html` (contact-grid mailto, form action FormSubmit), `mentions.html` (contact + RGPD) |
+| **Email** | just.bordas@gmail.com | `index.html` (contact-grid mailto), `mentions.html` (contact + RGPD). Le form pointe sur l'alias FormSubmit, pas sur l'adresse |
 | **Adresse** | 1238 chemin de Vacquiers, 31380 Montjoire | `index.html` (contact-grid), `mentions.html` (bloc Éditeur) |
 | **SIRET** | 814 197 661 00022 | `mentions.html` uniquement |
 | **Code APE** | 2312Z — Façonnage et transformation du verre plat | `mentions.html` uniquement |
@@ -203,7 +203,7 @@ grep -rn "\[\[" --include="*.html"
 
 **Si le nom commercial change** : remplacer partout via `grep -rln "Just Bordas" | xargs sed -i 's/Just Bordas/Nouveau Nom/g'` puis régénérer `og-image.jpg` si elle contenait le nom (actuellement non). Mettre à jour aussi la fiche Google Business.
 
-**Si l'email change** : remplacer `just.bordas@gmail.com` (grep au-dessus), **plus** reconfigurer FormSubmit avec la nouvelle adresse (changer l'`action` du formulaire dans `index.html` et réactiver via le premier envoi).
+**Si l'email change** : remplacer `just.bordas@gmail.com` (grep au-dessus), **plus** reconfigurer FormSubmit avec la nouvelle adresse. Procédure : remettre temporairement l'adresse en clair dans l'`action` du formulaire (`index.html`), envoyer une première fois pour déclencher le mail d'activation, cliquer « Activer le formulaire », puis remplacer l'adresse par le nouvel alias fourni dans ce mail. Tant que l'activation n'est pas faite, **les soumissions ne sont pas délivrées**.
 
 **Si le téléphone change** : attention au double format — `06 60 14 86 49` (affichage) et `tel:+33660148649` (href). Les deux à changer.
 
